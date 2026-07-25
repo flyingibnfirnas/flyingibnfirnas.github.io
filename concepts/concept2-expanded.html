@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Concept 2 Expanded — Flying Ibn Firnas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --orange: #e87a20;
+      --orange-light: #f0943e;
+      --bg: #0c0c0c;
+      --sidebar-bg: #111111;
+      --surface: #181818;
+      --surface-hover: #222222;
+      --text: #f0f0f0;
+      --text-muted: #888;
+      --text-dim: #aaa;
+      --border: rgba(255,255,255,0.06);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 280px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+    }
+
+    .sidebar-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .sidebar-brand img { width: 80px; margin-bottom: 1rem; }
+
+    .sidebar-brand h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .sidebar-brand .name {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav a:hover { background: var(--surface); color: var(--text); }
+    .sidebar-nav a.active { background: rgba(232,122,32,0.1); color: var(--orange); }
+    .sidebar-nav .nav-icon { font-size: 1.1rem; width: 24px; text-align: center; }
+
+    .sidebar-socials {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .sidebar-socials a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: color 0.2s;
+    }
+
+    .sidebar-socials a:hover { color: var(--orange); }
+
+    /* MAIN */
+    .main {
+      margin-left: 280px;
+      flex: 1;
+      min-height: 100vh;
+    }
+
+    .page-section {
+      padding: 5rem 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-section:last-child { border-bottom: none; }
+
+    /* HERO */
+    .hero-split {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-split .overline {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--orange);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-split h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-split h1 .line2 { color: var(--text-dim); }
+
+    .hero-split .hero-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 550px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    .tag-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+    .tag {
+      padding: 0.4rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    /* SECTION HEADERS */
+    .sec-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .sec-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      color: var(--orange);
+      font-weight: 600;
+    }
+
+    .sec-header h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .sec-line { flex: 1; height: 1px; background: var(--border); }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 2rem; }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline-item { position: relative; padding-bottom: 2.5rem; }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--orange);
+      border: 2px solid var(--bg);
+    }
+
+    .timeline-item h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .timeline-item .timeline-meta { font-size: 0.8rem; color: var(--orange); margin-bottom: 0.5rem; }
+    .timeline-item p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* SKILL BARS */
+    .skills-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+    .skill-item h4 {
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .skill-bar { height: 4px; background: var(--surface); border-radius: 2px; overflow: hidden; }
+
+    .skill-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--orange), var(--orange-light));
+      border-radius: 2px;
+    }
+
+    /* PROJECTS */
+    .project-list { display: flex; flex-direction: column; gap: 1rem; }
+
+    .project-item {
+      background: var(--surface);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .project-item:hover,
+    .project-item.open { border-color: rgba(232,122,32,0.3); }
+
+    .project-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s;
+    }
+
+    .project-header:hover { background: var(--surface-hover); }
+
+    .proj-icon {
+      font-size: 1.5rem;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(232,122,32,0.08);
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+
+    .proj-summary { flex: 1; }
+    .proj-summary h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .proj-summary .proj-sub { font-size: 0.8rem; color: var(--text-muted); }
+
+    .proj-toggle {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+
+    .project-item.open .proj-toggle { transform: rotate(180deg); }
+
+    .project-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+    }
+
+    .project-item.open .project-details { max-height: 2000px; }
+
+    .details-inner {
+      padding: 0 1.5rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .details-desc {
+      padding-top: 1.5rem;
+      font-size: 0.92rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .details-keywords {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .kw-tag {
+      font-size: 0.7rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      background: rgba(232,122,32,0.08);
+      color: var(--orange);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .details-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .gallery-item {
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .gallery-item:hover { border-color: rgba(232,122,32,0.3); }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      background: #fff;
+    }
+
+    .gallery-item.dark-bg img { background: var(--bg); }
+
+    .gallery-caption {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: var(--surface);
+    }
+
+    .details-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .details-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .details-links a:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
+    /* LIGHTBOX */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0,0,0,0.92);
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+      padding: 2rem;
+    }
+
+    .lightbox.active { display: flex; }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    /* HOBBIES */
+    .hobby-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+
+    .hobby-card {
+      padding: 2rem;
+      background: var(--surface);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .hobby-card:hover { border-color: rgba(232,122,32,0.2); }
+    .hobby-card .hicon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .hobby-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .hobby-card p { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* CONTACT */
+    .contact-min { text-align: center; max-width: 500px; margin: 0 auto; }
+
+    .contact-min h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-min p { color: var(--text-muted); margin-bottom: 2rem; }
+
+    .contact-min .contact-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .contact-min .contact-btns a {
+      padding: 0.6rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .contact-min .contact-btns a:hover { border-color: var(--orange); color: var(--orange); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .page-section { padding: 3rem 1.5rem; }
+      .hero-split { padding: 3rem 1.5rem; }
+      .skills-list { grid-template-columns: 1fr; }
+      .hobby-cards { grid-template-columns: 1fr; }
+      .details-gallery { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="../logo.png" alt="Logo">
+      <h1>Flying Ibn Firnas</h1>
+      <p class="name">Mohamed Helal</p>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#home" class="active"><span class="nav-icon">◈</span> Home</a>
+      <a href="#about"><span class="nav-icon">◇</span> About</a>
+      <a href="#skills"><span class="nav-icon">◆</span> Skills</a>
+      <a href="#projects"><span class="nav-icon">▣</span> Projects</a>
+      <a href="#hobbies"><span class="nav-icon">☆</span> Life</a>
+      <a href="#contact"><span class="nav-icon">◉</span> Contact</a>
+    </nav>
+    <div class="sidebar-socials">
+      <a href="https://github.com/flyingibnfirnas" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/mohamedhhelal" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <!-- HERO -->
+    <div class="hero-split" id="home">
+      <p class="overline">Welcome</p>
+      <h1>
+        I build things that<br>
+        <span class="line2">move, think, and fly.</span>
+      </h1>
+      <p class="hero-desc">Engineer specializing in embedded systems, automotive diagnostics, aerospace simulation, and robotics. I work across the full stack — from bare-metal firmware to Matlab models to desktop applications.</p>
+      <div class="tag-row">
+        <span class="tag">Embedded Systems</span>
+        <span class="tag">Automotive</span>
+        <span class="tag">Aerospace</span>
+        <span class="tag">Robotics</span>
+        <span class="tag">Diagnostics</span>
+        <span class="tag">Software</span>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="page-section" id="about">
+      <div class="sec-header">
+        <span class="sec-number">01</span>
+        <h2>About</h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <h3>The Story</h3>
+          <p class="timeline-meta">Flying Ibn Firnas</p>
+          <p>Named after Abbas ibn Firnas — the 9th-century Andalusian polymath who dared to build wings and fly centuries before anyone else. That spirit of fearless experimentation drives everything I do.</p>
+        </div>
+        <div class="timeline-item">
+          <h3>What I Do</h3>
+          <p class="timeline-meta">Engineering Across Domains</p>
+          <p>From simulating military fighter aircraft engines, to calibrating industrial robotic tooling, to writing firmware for microcontrollers — I work wherever engineering meets real-world problems. I hold a Master's degree with published research in robotics and manufacturing.</p>
+        </div>
+        <div class="timeline-item">
+          <h3>Philosophy</h3>
+          <p class="timeline-meta">Build, Break, Learn, Repeat</p>
+          <p>The best way to learn is to build. Every project here started as a question: "Can I make this work?" The answer is always worth finding out.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="page-section" id="skills">
+      <div class="sec-header">
+        <span class="sec-number">02</span>
+        <h2>Skills</h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="skills-list">
+        <div class="skill-item">
+          <h4>C/C++ <span>Advanced</span></h4>
+          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+        </div>
+        <div class="skill-item">
+          <h4>Matlab / Simulink <span>Advanced</span></h4>
+          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+        </div>
+        <div class="skill-item">
+          <h4>Modeling &amp; Simulation <span>Advanced</span></h4>
+          <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill-item">
+          <h4>Embedded Systems (STM32/ESP32) <span>Advanced</span></h4>
+          <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill-item">
+          <h4>Robotics &amp; Kinematics <span>Advanced</span></h4>
+          <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill-item">
+          <h4>Automotive Diagnostics <span>Advanced</span></h4>
+          <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill-item">
+          <h4>Python <span>Intermediate</span></h4>
+          <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+        </div>
+        <div class="skill-item">
+          <h4>Desktop GUI (ImGui/Qt/MFC) <span>Intermediate</span></h4>
+          <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="page-section" id="projects">
+      <div class="sec-header">
+        <span class="sec-number">03</span>
+        <h2>Projects</h2>
+        <div class="sec-line"></div>
+      </div>
+
+      <div class="project-list">
+
+        <!-- PROJECT 1: Power Plant -->
+        <div class="project-item">
+          <div class="project-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="proj-icon">✈️</div>
+            <div class="proj-summary">
+              <h3>Fighter Aircraft Power Plant Model</h3>
+              <p class="proj-sub">Amel Group &bull; Aerospace &bull; Simulation</p>
+            </div>
+            <div class="proj-toggle">▾</div>
+          </div>
+          <div class="project-details">
+            <div class="details-inner">
+              <p class="details-desc">
+                During my employment at <strong>Amel Group</strong>, I was responsible for simulating a military fighter aircraft power plant (turbofan engine). I created a complete generic turbofan engine model that could be customized to match any specific engine model of the same class. During the design phase, the model was verified and all the parameters were tuned by creating a complete simulation on <strong>Matlab/Simulink</strong>. The design was implemented and debugged using <strong>C/C++</strong> via Microsoft Visual Studio. The model was exhaustively tested through a series of detailed planned unit tests. Afterwards, the power plant system was integrated with the rest of the aircraft systems and was approved through rigorous integration testing.
+              </p>
+              <div class="details-keywords">
+                <span class="kw-tag">C/C++</span>
+                <span class="kw-tag">Matlab/Simulink</span>
+                <span class="kw-tag">Modeling</span>
+                <span class="kw-tag">Simulation</span>
+                <span class="kw-tag">Turbofan Engine</span>
+                <span class="kw-tag">Testing</span>
+                <span class="kw-tag">Integration</span>
+                <span class="kw-tag">Military</span>
+                <span class="kw-tag">Simulators</span>
+              </div>
+              <div class="details-gallery">
+                <div class="gallery-item" onclick="openLightbox(this)">
+                  <img src="images/powerplant-diagram.png" alt="Power Plant System Architecture">
+                  <div class="gallery-caption">Power Plant System Architecture</div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox(this)">
+                  <img src="images/simulink-model.png" alt="Simulink Engine Model">
+                  <div class="gallery-caption">Matlab/Simulink Engine Model</div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox(this)">
+                  <img src="images/engine-crosssection.png" alt="Turbofan Engine Cross-Section">
+                  <div class="gallery-caption">Turbofan Engine Cross-Section</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECT 2: Robotic Calibration -->
+        <div class="project-item">
+          <div class="project-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="proj-icon">🤖</div>
+            <div class="proj-summary">
+              <h3>Robotic Tooling Self-Calibration</h3>
+              <p class="proj-sub">Master's Thesis &bull; SAE Paper &bull; Robotics</p>
+            </div>
+            <div class="proj-toggle">▾</div>
+          </div>
+          <div class="project-details">
+            <div class="details-inner">
+              <p class="details-desc">
+                At the end of my undergraduate career, I published an <strong>SAE conference paper</strong> on robotic tooling self-calibration. I proposed a new easy-to-use systematic approach for calibrating industrial tools mounted on a serial robotic manipulator. The method is based on the <strong>self-calibration approach</strong> which facilitates the calibration process on the workshop floor by ensuring no external measurement systems are needed. A simple jig with multiple precisely measured holes is used for the calibration process. An <strong>industrial vision system</strong> was used to determine the 3D position of mounted holes by implementing stereovision techniques. Multiple simulations were created using <strong>Matlab</strong> to demonstrate the effectiveness of the proposed method. A series of graphical user interfaces were carefully designed to facilitate the use of the simulations for multiple study cases.
+              </p>
+              <div class="details-keywords">
+                <span class="kw-tag">Robotics</span>
+                <span class="kw-tag">Kinematics</span>
+                <span class="kw-tag">Manufacturing</span>
+                <span class="kw-tag">Self-Calibration</span>
+                <span class="kw-tag">Vision System</span>
+                <span class="kw-tag">Percussive Riveting</span>
+                <span class="kw-tag">Optimization</span>
+                <span class="kw-tag">Simulation</span>
+                <span class="kw-tag">GUI</span>
+              </div>
+              <div class="details-gallery">
+                <div class="gallery-item" onclick="openLightbox(this)">
+                  <img src="images/end-effector.png" alt="End-Effector CAD Model">
+                  <div class="gallery-caption">End-Effector with Camera &amp; Riveting Gun</div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox(this)">
+                  <img src="images/abb-robot.png" alt="ABB Industrial Robot">
+                  <div class="gallery-caption">ABB Industrial Robot</div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox(this)">
+                  <img src="images/stereo-geometry.png" alt="Stereovision Geometry">
+                  <div class="gallery-caption">Stereovision Geometry</div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox(this)">
+                  <img src="images/3d-simulation.png" alt="3D Simulation Tool">
+                  <div class="gallery-caption">3D Simulation with Transformation</div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox(this)">
+                  <img src="images/points-measurements.png" alt="Points Measurements GUI">
+                  <div class="gallery-caption">Points Measurements GUI</div>
+                </div>
+                <div class="gallery-item" onclick="openLightbox(this)">
+                  <img src="images/simulated-errors.png" alt="Simulated Errors GUI">
+                  <div class="gallery-caption">Simulated Errors GUI</div>
+                </div>
+              </div>
+              <div class="details-links">
+                <a href="https://www.sae.org/publications/technical-papers/content/2013-01-2118/" target="_blank">→ SAE Paper (2013-01-2118)</a>
+                <a href="https://rshare.library.torontomu.ca/articles/thesis/Robotic_tooling_calibration_based_on_linear_and_nonlinear_formulations/14646243?file=28126326" target="_blank">→ Master's Thesis (TMU)</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PLACEHOLDER: More projects coming -->
+        <div class="project-item" style="opacity: 0.5;">
+          <div class="project-header" style="cursor: default;">
+            <div class="proj-icon">🔧</div>
+            <div class="proj-summary">
+              <h3>More Projects Coming Soon</h3>
+              <p class="proj-sub">Additional projects will be added here</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HOBBIES -->
+    <div class="page-section" id="hobbies">
+      <div class="sec-header">
+        <span class="sec-number">04</span>
+        <h2>Beyond Work</h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="hobby-cards">
+        <div class="hobby-card">
+          <div class="hicon">🥋</div>
+          <h3>Karate</h3>
+          <p>Discipline and focus — on and off the mat</p>
+        </div>
+        <div class="hobby-card">
+          <div class="hicon">🛠️</div>
+          <h3>Making</h3>
+          <p>Electronics, 3D prints, weekend hacks</p>
+        </div>
+        <div class="hobby-card">
+          <div class="hicon">📚</div>
+          <h3>Learning</h3>
+          <p>Always exploring new tech and disciplines</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="page-section" id="contact">
+      <div class="contact-min">
+        <h2>Let's Connect</h2>
+        <p>Whether it's a project idea, a collaboration, or just a hello — I'd love to hear from you.</p>
+        <div class="contact-btns">
+          <a href="https://github.com/flyingibnfirnas" target="_blank">GitHub</a>
+          <a href="https://www.linkedin.com/in/mohamedhhelal" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <script>
+    function openLightbox(el) {
+      const img = el.querySelector('img');
+      const lb = document.getElementById('lightbox');
+      document.getElementById('lightbox-img').src = img.src;
+      lb.classList.add('active');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+</body>
+</html>

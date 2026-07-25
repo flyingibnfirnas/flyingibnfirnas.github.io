@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Concept 2 — Split Nav | Flying Ibn Firnas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --orange: #e87a20;
+      --orange-light: #f0943e;
+      --bg: #0c0c0c;
+      --sidebar-bg: #111111;
+      --surface: #181818;
+      --surface-hover: #222222;
+      --text: #f0f0f0;
+      --text-muted: #888;
+      --text-dim: #aaa;
+      --border: rgba(255,255,255,0.06);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 280px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+    }
+
+    .sidebar-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .sidebar-brand img {
+      width: 80px;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-brand h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .sidebar-brand .name {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      font-weight: 400;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav a:hover {
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    .sidebar-nav a.active {
+      background: rgba(232,122,32,0.1);
+      color: var(--orange);
+    }
+
+    .sidebar-nav .nav-icon { font-size: 1.1rem; width: 24px; text-align: center; }
+
+    .sidebar-socials {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .sidebar-socials a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: color 0.2s;
+    }
+
+    .sidebar-socials a:hover { color: var(--orange); }
+
+    /* MAIN CONTENT */
+    .main {
+      margin-left: 280px;
+      flex: 1;
+      min-height: 100vh;
+    }
+
+    .page-section {
+      padding: 5rem 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-section:last-child { border-bottom: none; }
+
+    /* HERO */
+    .hero-split {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-split .overline {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--orange);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-split h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-split h1 .line2 { color: var(--text-dim); }
+
+    .hero-split .hero-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 550px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    .tag-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      padding: 0.4rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    /* SECTION HEADERS */
+    .sec-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .sec-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      color: var(--orange);
+      font-weight: 600;
+    }
+
+    .sec-header h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .sec-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 2rem; }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 2.5rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--orange);
+      border: 2px solid var(--bg);
+    }
+
+    .timeline-item h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-item .timeline-meta {
+      font-size: 0.8rem;
+      color: var(--orange);
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-item p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* SKILL BARS */
+    .skills-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .skill-item h4 {
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .skill-bar {
+      height: 4px;
+      background: var(--surface);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .skill-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--orange), var(--orange-light));
+      border-radius: 2px;
+    }
+
+    /* PROJECT LIST */
+    .project-list { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .project-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      background: var(--surface);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+      cursor: default;
+    }
+
+    .project-row:hover {
+      border-color: rgba(232,122,32,0.3);
+      transform: translateX(4px);
+    }
+
+    .project-row .proj-icon {
+      font-size: 1.5rem;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(232,122,32,0.08);
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+
+    .project-row .proj-body { flex: 1; }
+
+    .project-row h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; }
+
+    .project-row p { font-size: 0.85rem; color: var(--text-muted); }
+
+    .project-row .proj-tags {
+      display: flex;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+
+    .project-row .proj-tags span {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      background: var(--surface-hover);
+      color: var(--text-dim);
+    }
+
+    /* HOBBIES */
+    .hobby-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .hobby-card {
+      padding: 2rem;
+      background: var(--surface);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .hobby-card:hover { border-color: rgba(232,122,32,0.2); }
+
+    .hobby-card .hicon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .hobby-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .hobby-card p { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* CONTACT */
+    .contact-min {
+      text-align: center;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .contact-min h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-min p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .contact-min .contact-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .contact-min .contact-btns a {
+      padding: 0.6rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .contact-min .contact-btns a:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .page-section { padding: 3rem 1.5rem; }
+      .hero-split { padding: 3rem 1.5rem; }
+      .skills-list { grid-template-columns: 1fr; }
+      .hobby-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="../logo.png" alt="Logo">
+      <h1>Flying Ibn Firnas</h1>
+      <p class="name">Mohamed Helal</p>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#home" class="active"><span class="nav-icon">◈</span> Home</a>
+      <a href="#about"><span class="nav-icon">◇</span> About</a>
+      <a href="#skills"><span class="nav-icon">◆</span> Skills</a>
+      <a href="#projects"><span class="nav-icon">▣</span> Projects</a>
+      <a href="#hobbies"><span class="nav-icon">☆</span> Life</a>
+      <a href="#contact"><span class="nav-icon">◉</span> Contact</a>
+    </nav>
+    <div class="sidebar-socials">
+      <a href="https://github.com/flyingibnfirnas" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/mohamedhhelal" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="hero-split" id="home">
+      <p class="overline">Welcome</p>
+      <h1>
+        I build things that<br>
+        <span class="line2">move, think, and fly.</span>
+      </h1>
+      <p class="hero-desc">Engineer specializing in embedded systems, automotive diagnostics, and aerospace. I work across the full stack — from bare-metal firmware to desktop applications.</p>
+      <div class="tag-row">
+        <span class="tag">Embedded Systems</span>
+        <span class="tag">Automotive</span>
+        <span class="tag">Aerospace</span>
+        <span class="tag">Software</span>
+        <span class="tag">Diagnostics</span>
+      </div>
+    </div>
+
+    <div class="page-section" id="about">
+      <div class="sec-header">
+        <span class="sec-number">01</span>
+        <h2>About</h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <h3>The Story</h3>
+          <p class="timeline-meta">Flying Ibn Firnas</p>
+          <p>Named after Abbas ibn Firnas — the 9th-century polymath who dared to build wings and fly centuries before anyone else. That spirit of fearless experimentation drives everything I do.</p>
+        </div>
+        <div class="timeline-item">
+          <h3>What I Do</h3>
+          <p class="timeline-meta">Engineering Across Domains</p>
+          <p>From writing firmware for STM32 and ESP32 microcontrollers, to developing diagnostic tools for vehicles, to building desktop applications with C++ — I work wherever engineering meets real-world problems.</p>
+        </div>
+        <div class="timeline-item">
+          <h3>Philosophy</h3>
+          <p class="timeline-meta">Build, Break, Learn, Repeat</p>
+          <p>The best way to learn is to build. Every project here started as a question: "Can I make this work?" The answer is always worth finding out.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-section" id="skills">
+      <div class="sec-header">
+        <span class="sec-number">02</span>
+        <h2>Skills</h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="skills-list">
+        <div class="skill-item">
+          <h4>Embedded C/C++ <span>Advanced</span></h4>
+          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+        </div>
+        <div class="skill-item">
+          <h4>STM32 / ESP32 <span>Advanced</span></h4>
+          <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill-item">
+          <h4>Python <span>Intermediate</span></h4>
+          <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+        </div>
+        <div class="skill-item">
+          <h4>Automotive Diagnostics <span>Advanced</span></h4>
+          <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill-item">
+          <h4>Desktop GUI (ImGui/Qt) <span>Intermediate</span></h4>
+          <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+        </div>
+        <div class="skill-item">
+          <h4>PCB / Hardware <span>Learning</span></h4>
+          <div class="skill-bar"><div class="skill-fill" style="width:45%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-section" id="projects">
+      <div class="sec-header">
+        <span class="sec-number">03</span>
+        <h2>Projects</h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="project-list">
+        <div class="project-row">
+          <div class="proj-icon">📷</div>
+          <div class="proj-body">
+            <h3>RaspiCam</h3>
+            <p>Camera interfacing and image processing on Raspberry Pi</p>
+          </div>
+          <div class="proj-tags"><span>RPi</span><span>Camera</span></div>
+        </div>
+        <div class="project-row">
+          <div class="proj-icon">🎮</div>
+          <div class="proj-body">
+            <h3>ImGui Applications</h3>
+            <p>Desktop GUI tools built with Dear ImGui for rapid prototyping</p>
+          </div>
+          <div class="proj-tags"><span>C++</span><span>ImGui</span></div>
+        </div>
+        <div class="project-row">
+          <div class="proj-icon">⚡</div>
+          <div class="proj-body">
+            <h3>STM32 Projects</h3>
+            <p>Microcontroller firmware and embedded system experiments</p>
+          </div>
+          <div class="proj-tags"><span>STM32</span><span>Embedded</span></div>
+        </div>
+        <div class="project-row">
+          <div class="proj-icon">📡</div>
+          <div class="proj-body">
+            <h3>ESP32 IoT</h3>
+            <p>Wi-Fi and Bluetooth enabled embedded applications</p>
+          </div>
+          <div class="proj-tags"><span>ESP32</span><span>IoT</span></div>
+        </div>
+        <div class="project-row">
+          <div class="proj-icon">🕹️</div>
+          <div class="proj-body">
+            <h3>Games &amp; Graphics</h3>
+            <p>TicTacToe, Raylib experiments, and graphical projects</p>
+          </div>
+          <div class="proj-tags"><span>Raylib</span><span>C++</span></div>
+        </div>
+        <div class="project-row">
+          <div class="proj-icon">⚙️</div>
+          <div class="proj-body">
+            <h3>Interface Tools</h3>
+            <p>Engineering desktop tools and interface applications</p>
+          </div>
+          <div class="proj-tags"><span>C++</span><span>Qt</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-section" id="hobbies">
+      <div class="sec-header">
+        <span class="sec-number">04</span>
+        <h2>Beyond Work</h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="hobby-cards">
+        <div class="hobby-card">
+          <div class="hicon">🥋</div>
+          <h3>Karate</h3>
+          <p>Discipline and focus — on and off the mat</p>
+        </div>
+        <div class="hobby-card">
+          <div class="hicon">🛠️</div>
+          <h3>Making</h3>
+          <p>Electronics, 3D prints, weekend hacks</p>
+        </div>
+        <div class="hobby-card">
+          <div class="hicon">📚</div>
+          <h3>Learning</h3>
+          <p>Always exploring new tech and disciplines</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-section" id="contact">
+      <div class="contact-min">
+        <h2>Let's Connect</h2>
+        <p>Whether it's a project idea, a collaboration, or just a hello — I'd love to hear from you.</p>
+        <div class="contact-btns">
+          <a href="https://github.com/flyingibnfirnas" target="_blank">GitHub</a>
+          <a href="https://www.linkedin.com/in/mohamedhhelal" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

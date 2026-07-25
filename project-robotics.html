@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Robotic Tooling Self-Calibration — Flying Ibn Firnas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      margin-bottom: 2.5rem;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--orange); }
+
+    .project-hero {
+      padding: 5rem 4rem 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project-hero .category-badge {
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      background: var(--orange-glow);
+      border: 1px solid rgba(232,122,32,0.2);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-hero .project-meta {
+      font-size: 0.9rem;
+      color: var(--orange);
+      margin-bottom: 1.5rem;
+    }
+
+    .project-hero .project-intro {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      max-width: 700px;
+    }
+
+    .project-content { padding: 3rem 4rem; }
+
+    .content-block { margin-bottom: 3.5rem; }
+
+    .content-block h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .content-block h2::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .content-block p {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      max-width: 700px;
+    }
+
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .highlight-card {
+      padding: 1.5rem;
+      background: var(--surface);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .highlight-card .hl-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+    .highlight-card h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .highlight-card p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+
+    .keywords { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+
+    .kw {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.9rem;
+      border-radius: 6px;
+      background: var(--orange-glow);
+      color: var(--orange);
+      font-weight: 500;
+    }
+
+    .gallery { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+
+    .gallery-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .gallery-full {
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .gallery-full:hover { border-color: rgba(232,122,32,0.4); }
+
+    .gallery-full img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .gallery-full .img-caption {
+      padding: 0.75rem 1rem;
+      background: var(--surface);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .gallery-full .img-caption .zoom-hint {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    .pub-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .pub-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .pub-link:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
+    .pub-link .pub-icon { font-size: 1.25rem; }
+    .pub-link .pub-info { display: flex; flex-direction: column; }
+    .pub-link .pub-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .pub-link .pub-title { font-weight: 500; font-size: 0.85rem; }
+
+    .project-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3rem 4rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .project-nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .project-nav a:hover { border-color: var(--orange); color: var(--orange); }
+
+    @media (max-width: 900px) {
+      .project-hero { padding: 3rem 1.5rem; }
+      .project-content { padding: 2rem 1.5rem; }
+      .project-nav { padding: 2rem 1.5rem; }
+      .gallery-row { grid-template-columns: 1fr; }
+      .highlights { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <a href="index.html" class="sidebar-brand">
+      <img src="logo.png" alt="Logo">
+      <h1>Flying Ibn Firnas</h1>
+      <p class="name">Mohamed Helal</p>
+    </a>
+    <nav class="sidebar-nav">
+      <a href="index.html"><span class="nav-icon">◈</span> Home</a>
+      <a href="index.html#about"><span class="nav-icon">◇</span> About</a>
+      <a href="index.html#skills"><span class="nav-icon">◆</span> Skills</a>
+      <a href="index.html#projects" class="active"><span class="nav-icon">▣</span> Projects</a>
+      <a href="index.html#hobbies"><span class="nav-icon">☆</span> Life</a>
+      <a href="index.html#contact"><span class="nav-icon">◉</span> Contact</a>
+    </nav>
+    <div class="sidebar-socials">
+      <a href="https://github.com/flyingibnfirnas" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/mohamedhhelal" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="project-hero">
+      <a href="index.html#projects" class="back-link">← Back to Projects</a>
+      <span class="category-badge">Robotics &bull; Research</span>
+      <h1>Robotic Tooling Self-Calibration</h1>
+      <p class="project-meta">Master's Thesis &bull; SAE Conference Paper (2013-01-2118) &bull; Toronto Metropolitan University</p>
+      <p class="project-intro">
+        A novel systematic approach for calibrating industrial tools mounted on serial robotic manipulators, using self-calibration techniques and stereovision — eliminating the need for external measurement systems on the workshop floor.
+      </p>
+    </div>
+
+    <div class="project-content">
+
+      <div class="content-block">
+        <h2>Overview</h2>
+        <p>
+          At the end of my undergraduate career, I published an <strong>SAE conference paper</strong> on robotic tooling self-calibration. I proposed a new easy-to-use systematic approach for calibrating industrial tools mounted on a serial robotic manipulator. The method is based on the <strong>self-calibration approach</strong> which facilitates the calibration process on the workshop floor by ensuring no external measurement systems are needed. A simple jig with multiple precisely measured holes is used for the calibration process. An <strong>industrial vision system</strong> was used to determine the 3D position of mounted holes by implementing stereovision techniques. Multiple simulations were created using <strong>Matlab</strong> to demonstrate the effectiveness of the proposed method. A series of graphical user interfaces were carefully designed to facilitate the use of the simulations for multiple study cases.
+        </p>
+      </div>
+
+      <div class="content-block">
+        <h2>Key Highlights</h2>
+        <div class="highlights">
+          <div class="highlight-card">
+            <div class="hl-icon">🤖</div>
+            <h4>Self-Calibration</h4>
+            <p>No external measurement systems needed — calibration happens directly on the workshop floor</p>
+          </div>
+          <div class="highlight-card">
+            <div class="hl-icon">📷</div>
+            <h4>Stereovision</h4>
+            <p>Industrial vision system for 3D position determination of calibration points</p>
+          </div>
+          <div class="highlight-card">
+            <div class="hl-icon">🧮</div>
+            <h4>Optimization</h4>
+            <p>Mathematical optimization for calibration parameter estimation using linear and nonlinear formulations</p>
+          </div>
+          <div class="highlight-card">
+            <div class="hl-icon">🖥️</div>
+            <h4>Simulation &amp; GUI</h4>
+            <p>Custom Matlab GUIs for running simulations across multiple study cases</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>The Robotic System</h2>
+        <p>The system uses an ABB industrial robot with a custom end-effector that integrates both a percussive riveting gun and a camera system for stereovision-based position measurement.</p>
+        <div class="gallery">
+          <div class="gallery-row">
+            <div class="gallery-full" onclick="openLightbox(this)">
+              <img src="images/end-effector.png" alt="End-Effector">
+              <div class="img-caption">
+                <span>End-Effector — Camera mount, riveting gun, and tool assembly</span>
+                <span class="zoom-hint">Click to zoom</span>
+              </div>
+            </div>
+            <div class="gallery-full" onclick="openLightbox(this)">
+              <img src="images/abb-robot.png" alt="ABB Robot">
+              <div class="img-caption">
+                <span>ABB Industrial Robot — 6-DOF serial manipulator</span>
+                <span class="zoom-hint">Click to zoom</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Stereovision &amp; 3D Reconstruction</h2>
+        <p>The calibration method uses two camera positions to triangulate the 3D coordinates of reference points on the calibration jig. The geometry of the stereo setup defines the coordinate transformations between camera, end-effector, and world frames.</p>
+        <div class="gallery">
+          <div class="gallery-row">
+            <div class="gallery-full" onclick="openLightbox(this)">
+              <img src="images/stereo-geometry.png" alt="Stereo Geometry">
+              <div class="img-caption">
+                <span>Stereovision Geometry — Dual-camera coordinate frame transformations</span>
+                <span class="zoom-hint">Click to zoom</span>
+              </div>
+            </div>
+            <div class="gallery-full" onclick="openLightbox(this)">
+              <img src="images/3d-simulation.png" alt="3D Simulation">
+              <div class="img-caption">
+                <span>3D Simulation with Transformation — Interactive point triangulation tool</span>
+                <span class="zoom-hint">Click to zoom</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Simulation Tools</h2>
+        <p>Custom graphical user interfaces were built in Matlab to facilitate experimentation with different calibration scenarios, error injection, and parameter estimation across multiple study cases.</p>
+        <div class="gallery">
+          <div class="gallery-row">
+            <div class="gallery-full" onclick="openLightbox(this)">
+              <img src="images/points-measurements.png" alt="Points Measurements">
+              <div class="img-caption">
+                <span>Points Measurements — Coordinate input, transformation parameters, and calibration data</span>
+                <span class="zoom-hint">Click to zoom</span>
+              </div>
+            </div>
+            <div class="gallery-full" onclick="openLightbox(this)">
+              <img src="images/simulated-errors.png" alt="Simulated Errors">
+              <div class="img-caption">
+                <span>Simulated Errors — Gaussian noise injection for robustness testing</span>
+                <span class="zoom-hint">Click to zoom</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Publications</h2>
+        <p>This work resulted in both a published SAE conference paper and a Master's thesis at Toronto Metropolitan University (formerly Ryerson University).</p>
+        <div class="pub-links">
+          <a href="https://www.sae.org/publications/technical-papers/content/2013-01-2118/" target="_blank" class="pub-link">
+            <span class="pub-icon">📄</span>
+            <span class="pub-info">
+              <span class="pub-label">SAE International</span>
+              <span class="pub-title">Robotic Tooling Self-Calibration (2013-01-2118)</span>
+            </span>
+          </a>
+          <a href="https://rshare.library.torontomu.ca/articles/thesis/Robotic_tooling_calibration_based_on_linear_and_nonlinear_formulations/14646243?file=28126326" target="_blank" class="pub-link">
+            <span class="pub-icon">🎓</span>
+            <span class="pub-info">
+              <span class="pub-label">Master's Thesis — TMU</span>
+              <span class="pub-title">Robotic Tooling Calibration Based on Linear and Nonlinear Formulations</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Technologies &amp; Keywords</h2>
+        <div class="keywords">
+          <span class="kw">Robotics</span>
+          <span class="kw">Kinematics</span>
+          <span class="kw">Manufacturing</span>
+          <span class="kw">Self-Calibration</span>
+          <span class="kw">Vision System</span>
+          <span class="kw">Stereovision</span>
+          <span class="kw">Percussive Riveting</span>
+          <span class="kw">Optimization</span>
+          <span class="kw">Matlab</span>
+          <span class="kw">GUI Design</span>
+          <span class="kw">Simulation</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="project-nav">
+      <a href="project-powerplant.html">← Power Plant Model</a>
+      <a href="project-helicopter.html">3 DOF Helicopter →</a>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <script>
+    function openLightbox(el) {
+      const img = el.querySelector('img');
+      document.getElementById('lightbox-img').src = img.src;
+      document.getElementById('lightbox').classList.add('active');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>

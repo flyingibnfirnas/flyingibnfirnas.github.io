@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automated Tape Punch Machine — Flying Ibn Firnas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      margin-bottom: 2.5rem;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--orange); }
+
+    .project-hero {
+      padding: 5rem 4rem 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project-hero .category-badge {
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      background: var(--orange-glow);
+      border: 1px solid rgba(232,122,32,0.2);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-hero .project-meta {
+      font-size: 0.9rem;
+      color: var(--orange);
+      margin-bottom: 1.5rem;
+    }
+
+    .project-hero .project-intro {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      max-width: 700px;
+    }
+
+    .project-content { padding: 3rem 4rem; }
+
+    .content-block { margin-bottom: 3.5rem; }
+
+    .content-block h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .content-block h2::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .content-block p {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      max-width: 700px;
+    }
+
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .highlight-card {
+      padding: 1.5rem;
+      background: var(--surface);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .highlight-card .hl-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+    .highlight-card h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .highlight-card p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+
+    .keywords { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+
+    .kw {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.9rem;
+      border-radius: 6px;
+      background: var(--orange-glow);
+      color: var(--orange);
+      font-weight: 500;
+    }
+
+    .gallery { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+
+    .gallery-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .gallery-full {
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .gallery-full:hover { border-color: rgba(232,122,32,0.4); }
+
+    .gallery-full img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .gallery-full .img-caption {
+      padding: 0.75rem 1rem;
+      background: var(--surface);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .gallery-full .img-caption .zoom-hint {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      max-width: 560px;
+    }
+
+    .video-card {
+      display: block;
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .video-card:hover {
+      border-color: rgba(232,122,32,0.4);
+      transform: translateY(-2px);
+    }
+
+    .video-card .video-thumb {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #111;
+      overflow: hidden;
+    }
+
+    .video-card .video-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-card .play-btn {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.35);
+      transition: background 0.2s;
+    }
+
+    .video-card:hover .play-btn { background: rgba(0,0,0,0.5); }
+
+    .video-card .play-btn span {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      padding-left: 3px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+
+    .video-card .video-caption {
+      padding: 0.75rem 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .video-card .video-caption .yt-hint {
+      font-size: 0.7rem;
+      opacity: 0.6;
+    }
+
+    .project-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3rem 4rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .project-nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .project-nav a:hover { border-color: var(--orange); color: var(--orange); }
+
+    @media (max-width: 900px) {
+      .project-hero { padding: 3rem 1.5rem; }
+      .project-content { padding: 2rem 1.5rem; }
+      .project-nav { padding: 2rem 1.5rem; }
+      .gallery-row { grid-template-columns: 1fr; }
+      .highlights { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <a href="concept2-multipage.html" class="sidebar-brand">
+      <img src="../logo.png" alt="Logo">
+      <h1>Flying Ibn Firnas</h1>
+      <p class="name">Mohamed Helal</p>
+    </a>
+    <nav class="sidebar-nav">
+      <a href="concept2-multipage.html"><span class="nav-icon">◈</span> Home</a>
+      <a href="concept2-multipage.html#about"><span class="nav-icon">◇</span> About</a>
+      <a href="concept2-multipage.html#skills"><span class="nav-icon">◆</span> Skills</a>
+      <a href="concept2-multipage.html#projects" class="active"><span class="nav-icon">▣</span> Projects</a>
+      <a href="concept2-multipage.html#hobbies"><span class="nav-icon">☆</span> Life</a>
+      <a href="concept2-multipage.html#contact"><span class="nav-icon">◉</span> Contact</a>
+    </nav>
+    <div class="sidebar-socials">
+      <a href="https://github.com/flyingibnfirnas" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/mohamedhhelal" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="project-hero">
+      <a href="concept2-multipage.html#projects" class="back-link">← Back to Projects</a>
+      <span class="category-badge">Mechatronics &bull; Research</span>
+      <h1>Automated Tape Punch Machine</h1>
+      <p class="project-meta">Undergraduate Research Assistant &bull; Ryerson University</p>
+      <p class="project-intro">
+        A complete electromechanical tape punch system — CAD-designed punch-die mechanics, stepper-driven feed, and a hardwired PLC controller for automated hole patterns used in precise rivet insertion.
+      </p>
+    </div>
+
+    <div class="project-content">
+
+      <div class="content-block">
+        <h2>Overview</h2>
+        <p>
+          As an undergraduate research assistant at Ryerson University, I designed and assembled a mechanical system for tape punching. The machine creates a pattern of holes specially designed for accurate rivet insertion. A gear system driven by a stepper motor feeds the tape, and a guiding and positioning system keeps the tape precise relative to the punch-die. The system was fine-tuned and successfully tested. Alongside the mechanics, I designed, hardwired, and tested a controller for full automation using a <strong>PLC</strong>, stepper driver, and proximity sensors for tape and punch position feedback.
+        </p>
+      </div>
+
+      <div class="content-block">
+        <h2>Key Highlights</h2>
+        <div class="highlights">
+          <div class="highlight-card">
+            <div class="hl-icon">⚙️</div>
+            <h4>Punch-Die Mechanics</h4>
+            <p>Custom mechanical design for accurate hole patterns used in rivet insertion</p>
+          </div>
+          <div class="highlight-card">
+            <div class="hl-icon">🔄</div>
+            <h4>Stepper Feed System</h4>
+            <p>Gear-driven stepper motor for controlled tape feeding and positioning</p>
+          </div>
+          <div class="highlight-card">
+            <div class="hl-icon">📟</div>
+            <h4>PLC Automation</h4>
+            <p>Hardwired PLC controller with ladder logic for the full punch sequence</p>
+          </div>
+          <div class="highlight-card">
+            <div class="hl-icon">📡</div>
+            <h4>Sensor Feedback</h4>
+            <p>Proximity sensors for locating both tape and punch position</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Mechanical Tape Punch</h2>
+        <p>Designed and assembled in CATIA V5 — stepper-driven feed, guiding/positioning system, and punch-die assembly for precise hole patterns.</p>
+        <div class="gallery">
+          <div class="gallery-row">
+            <div class="gallery-full" onclick="openLightbox(this)">
+              <img src="images/tapepunch-cad.png" alt="Tape Punch CAD Assembly">
+              <div class="img-caption">
+                <span>Full CAD Assembly — CATIA V5 mechanical design</span>
+                <span class="zoom-hint">Click to zoom</span>
+              </div>
+            </div>
+            <div class="gallery-full" onclick="openLightbox(this)">
+              <img src="images/tapepunch-cad-multiview.png" alt="Tape Punch Multi-View">
+              <div class="img-caption">
+                <span>Multi-View Layout — isometric, plan, and elevation</span>
+                <span class="zoom-hint">Click to zoom</span>
+              </div>
+            </div>
+          </div>
+          <div class="gallery-row">
+            <div class="gallery-full" onclick="openLightbox(this)">
+              <img src="images/tapepunch-full.png" alt="Full Machine Prototype">
+              <div class="img-caption">
+                <span>Assembled Prototype — mechanics with control enclosure</span>
+                <span class="zoom-hint">Click to zoom</span>
+              </div>
+            </div>
+            <div class="gallery-full" onclick="openLightbox(this)">
+              <img src="images/tapepunch-prototype.png" alt="Tape Punch Prototype Detail">
+              <div class="img-caption">
+                <span>Prototype Detail — feed system, guides, and drive motors</span>
+                <span class="zoom-hint">Click to zoom</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Tape Punch Controller</h2>
+        <p>A programmable logic controller was coded to run the automated punching sequence. A stepper motor driver controls tape feed; proximity sensors provide feedback. Power supply, relays, and hardwired schematics complete the industrial-style control box.</p>
+        <div class="gallery">
+          <div class="gallery-full" onclick="openLightbox(this)">
+            <img src="images/tapepunch-controller.png" alt="Tape Punch Controller">
+            <div class="img-caption">
+              <span>Controller Enclosure — PLC, power supply, terminal blocks, and hardwiring</span>
+              <span class="zoom-hint">Click to zoom</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Demonstration</h2>
+        <p>Video demo of the automated tape punch machine in operation.</p>
+        <div class="video-grid">
+          <a class="video-card" href="https://www.youtube.com/watch?v=PVNBTLsdlog" target="_blank" rel="noopener">
+            <div class="video-thumb">
+              <img src="https://img.youtube.com/vi/PVNBTLsdlog/hqdefault.jpg" alt="Tape Punch Demo">
+              <div class="play-btn"><span>▶</span></div>
+            </div>
+            <div class="video-caption">
+              <span>Automated Tape Punch — Demo</span>
+              <span class="yt-hint">YouTube ↗</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Technologies &amp; Keywords</h2>
+        <div class="keywords">
+          <span class="kw">Mechanical Design</span>
+          <span class="kw">CATIA</span>
+          <span class="kw">Stepper Motor</span>
+          <span class="kw">Punch-Die Design</span>
+          <span class="kw">Positioning &amp; Guiding</span>
+          <span class="kw">Gear System</span>
+          <span class="kw">Systems Integration</span>
+          <span class="kw">Proximity Sensors</span>
+          <span class="kw">PLC</span>
+          <span class="kw">Stepper Driver</span>
+          <span class="kw">Power Supply</span>
+          <span class="kw">Relays</span>
+          <span class="kw">Ladder Programming</span>
+          <span class="kw">Hardwiring</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="project-nav">
+      <a href="project-helicopter.html">← 3 DOF Helicopter</a>
+      <a href="concept2-multipage.html#projects">All Projects →</a>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <script>
+    function openLightbox(el) {
+      const img = el.querySelector('img');
+      document.getElementById('lightbox-img').src = img.src;
+      document.getElementById('lightbox').classList.add('active');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>

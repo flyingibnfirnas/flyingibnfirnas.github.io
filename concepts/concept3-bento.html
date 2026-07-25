@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Concept 3 — Bento Grid | Flying Ibn Firnas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --orange: #e87a20;
+      --orange-glow: rgba(232,122,32,0.15);
+      --bg: #09090b;
+      --card: #131316;
+      --card-hover: #1a1a1f;
+      --border: rgba(255,255,255,0.06);
+      --text: #fafafa;
+      --text-muted: #71717a;
+      --text-dim: #a1a1aa;
+      --radius: 16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      padding: 0.65rem 1.5rem;
+      background: rgba(19,19,22,0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+    }
+
+    nav .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    nav .nav-brand img { height: 28px; }
+    nav .nav-brand span { font-weight: 600; font-size: 0.9rem; }
+
+    nav .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    nav .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.825rem;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    nav .nav-links a:hover { color: var(--text); }
+
+    /* HERO BENTO */
+    .hero-bento {
+      padding: 7rem 2rem 3rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1rem;
+    }
+
+    .bento {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: all 0.3s;
+    }
+
+    .bento:hover {
+      border-color: rgba(232,122,32,0.2);
+      background: var(--card-hover);
+    }
+
+    .hero-main {
+      grid-row: span 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-main::after {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--orange-glow), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-main .greeting {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--orange);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .hero-main h1 {
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-main h1 .dim { color: var(--text-dim); }
+
+    .hero-main p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 450px;
+      font-weight: 300;
+    }
+
+    .hero-logo-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, var(--card), #0e0e10);
+    }
+
+    .hero-logo-card img {
+      width: 120px;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(2deg); }
+    }
+
+    .hero-tags-card {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-content: center;
+    }
+
+    .htag {
+      padding: 0.4rem 0.9rem;
+      background: rgba(232,122,32,0.06);
+      border: 1px solid rgba(232,122,32,0.15);
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--orange);
+      font-weight: 400;
+    }
+
+    /* SECTION */
+    .section-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .sec-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .sec-sub {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    /* BENTO GRID - ABOUT */
+    .about-bento {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .about-bento .bento-wide { grid-column: span 2; }
+
+    .about-story p {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .about-story p strong { color: var(--text); font-weight: 500; }
+
+    .about-quote {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .about-quote .big-quote {
+      font-size: 3rem;
+      color: var(--orange);
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .about-quote p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    /* EXPERTISE BENTO */
+    .expertise-bento {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .exp-card .exp-icon { font-size: 1.75rem; margin-bottom: 1rem; }
+    .exp-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .exp-card p { font-size: 0.85rem; color: var(--text-muted); font-weight: 300; }
+
+    .exp-card.featured {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .exp-card.featured .exp-icon {
+      font-size: 3rem;
+      margin-bottom: 0;
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--orange-glow);
+      border-radius: 16px;
+    }
+
+    .exp-card.featured .exp-body h3 { font-size: 1.1rem; }
+
+    /* PROJECTS BENTO */
+    .projects-bento {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: minmax(180px, auto);
+      gap: 1rem;
+    }
+
+    .proj-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .proj-card.tall { grid-row: span 2; }
+
+    .proj-card .proj-top { flex: 1; }
+
+    .proj-card .proj-emoji {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .proj-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .proj-card p { font-size: 0.85rem; color: var(--text-muted); font-weight: 300; line-height: 1.5; }
+
+    .proj-card .proj-tags {
+      display: flex;
+      gap: 0.4rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .proj-card .proj-tags span {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      background: rgba(255,255,255,0.04);
+      border-radius: 4px;
+      color: var(--text-dim);
+    }
+
+    /* LIFE BENTO */
+    .life-bento {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .life-card { text-align: center; padding: 2.5rem 1.5rem; }
+    .life-card .life-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .life-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .life-card p { font-size: 0.85rem; color: var(--text-muted); font-weight: 300; }
+
+    /* CONTACT */
+    .contact-bento {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1rem;
+    }
+
+    .contact-main {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .contact-main h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-main p {
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 2rem;
+    }
+
+    .contact-main .cta-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .cta-btn {
+      padding: 0.6rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .cta-primary {
+      background: var(--orange);
+      color: #fff;
+    }
+
+    .cta-primary:hover { background: #c45e10; }
+
+    .cta-outline {
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+    }
+
+    .cta-outline:hover { border-color: var(--orange); color: var(--text); }
+
+    .contact-links-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    .contact-links-card a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .contact-links-card a:hover { color: var(--orange); }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 300;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero-bento { grid-template-columns: 1fr; }
+      .hero-main { grid-row: span 1; }
+      .about-bento,
+      .expertise-bento,
+      .projects-bento,
+      .life-bento,
+      .contact-bento { grid-template-columns: 1fr; }
+      .about-bento .bento-wide,
+      .exp-card.featured { grid-column: span 1; }
+      .proj-card.tall { grid-row: span 1; }
+      nav .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#" class="nav-brand">
+      <img src="../logo.png" alt="Logo">
+      <span>FIF</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#expertise">Expertise</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#life">Life</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero-bento">
+    <div class="bento hero-main">
+      <p class="greeting">Hello, I'm</p>
+      <h1>Mohamed Helal<br><span class="dim">aka Flying Ibn Firnas</span></h1>
+      <p>Engineer building across embedded systems, automotive diagnostics, aerospace, and software. Inspired by the original Ibn Firnas — always reaching higher.</p>
+    </div>
+    <div class="bento hero-logo-card">
+      <img src="../logo.png" alt="Flying Ibn Firnas">
+    </div>
+    <div class="bento hero-tags-card">
+      <span class="htag">Embedded Systems</span>
+      <span class="htag">Automotive</span>
+      <span class="htag">Aerospace</span>
+      <span class="htag">C/C++</span>
+      <span class="htag">Python</span>
+      <span class="htag">Diagnostics</span>
+      <span class="htag">IoT</span>
+      <span class="htag">STM32</span>
+      <span class="htag">ESP32</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="section-wrap" id="about">
+    <h2 class="sec-title">About Me</h2>
+    <p class="sec-sub">The story behind Flying Ibn Firnas</p>
+    <div class="about-bento">
+      <div class="bento about-story bento-wide">
+        <p>I'm <strong>Mohamed Helal</strong>, an engineer who works across multiple domains — from writing bare-metal firmware for microcontrollers, to building diagnostic tools for vehicles, to dreaming about aerospace systems.</p>
+        <br>
+        <p>The name <strong>Flying Ibn Firnas</strong> comes from Abbas ibn Firnas, a 9th-century Andalusian polymath who built wings and attempted flight centuries before the Wright brothers. His fearless spirit of experimentation and cross-disciplinary thinking is what drives my work.</p>
+      </div>
+      <div class="bento about-quote">
+        <div class="big-quote">"</div>
+        <p>He flew faster than the phoenix in his flight when he dressed his body in the feathers of a vulture.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPERTISE -->
+  <div class="section-wrap" id="expertise">
+    <h2 class="sec-title">Expertise</h2>
+    <p class="sec-sub">Where engineering meets curiosity</p>
+    <div class="expertise-bento">
+      <div class="bento exp-card featured">
+        <div class="exp-icon">⚡</div>
+        <div class="exp-body">
+          <h3>Embedded Systems</h3>
+          <p>STM32, ESP32, Arduino — firmware development, RTOS, peripheral drivers, hardware interfacing, and bare-metal programming.</p>
+        </div>
+      </div>
+      <div class="bento exp-card">
+        <div class="exp-icon">🚗</div>
+        <h3>Automotive</h3>
+        <p>Vehicle diagnostics, OBD, CAN bus, and ECU development.</p>
+      </div>
+      <div class="bento exp-card">
+        <div class="exp-icon">💻</div>
+        <h3>Software</h3>
+        <p>C/C++, Python, desktop apps, GUI tools, and system programming.</p>
+      </div>
+      <div class="bento exp-card">
+        <div class="exp-icon">✈️</div>
+        <h3>Aerospace</h3>
+        <p>Avionics, flight systems, and the dream of making things fly.</p>
+      </div>
+      <div class="bento exp-card featured">
+        <div class="exp-icon">🔍</div>
+        <div class="exp-body">
+          <h3>Diagnostics</h3>
+          <p>System troubleshooting, diagnostic tool development, protocol analysis, and fault tracing across hardware and software domains.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="section-wrap" id="projects">
+    <h2 class="sec-title">Projects</h2>
+    <p class="sec-sub">Things I've built and shipped</p>
+    <div class="projects-bento">
+      <div class="bento proj-card tall">
+        <div class="proj-top">
+          <div class="proj-emoji">📷</div>
+          <h3>RaspiCam</h3>
+          <p>Camera interfacing and image processing on Raspberry Pi. Real-time capture, streaming, and computer vision experiments.</p>
+        </div>
+        <div class="proj-tags"><span>RPi</span><span>Camera</span><span>Python</span></div>
+      </div>
+      <div class="bento proj-card">
+        <div class="proj-top">
+          <div class="proj-emoji">🎮</div>
+          <h3>ImGui Apps</h3>
+          <p>Desktop GUI tools with Dear ImGui for rapid prototyping.</p>
+        </div>
+        <div class="proj-tags"><span>C++</span><span>ImGui</span></div>
+      </div>
+      <div class="bento proj-card">
+        <div class="proj-top">
+          <div class="proj-emoji">📡</div>
+          <h3>ESP32 IoT</h3>
+          <p>Wi-Fi and BLE enabled embedded applications.</p>
+        </div>
+        <div class="proj-tags"><span>ESP32</span><span>IoT</span></div>
+      </div>
+      <div class="bento proj-card">
+        <div class="proj-top">
+          <div class="proj-emoji">⚡</div>
+          <h3>STM32 Projects</h3>
+          <p>Firmware, peripheral drivers, and embedded experiments.</p>
+        </div>
+        <div class="proj-tags"><span>STM32</span><span>C</span></div>
+      </div>
+      <div class="bento proj-card">
+        <div class="proj-top">
+          <div class="proj-emoji">🕹️</div>
+          <h3>Games</h3>
+          <p>TicTacToe, Raylib graphics, and game dev experiments.</p>
+        </div>
+        <div class="proj-tags"><span>Raylib</span><span>C++</span></div>
+      </div>
+      <div class="bento proj-card">
+        <div class="proj-top">
+          <div class="proj-emoji">⚙️</div>
+          <h3>Interface Tools</h3>
+          <p>Engineering desktop tools and interfaces.</p>
+        </div>
+        <div class="proj-tags"><span>C++</span><span>Qt</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIFE -->
+  <div class="section-wrap" id="life">
+    <h2 class="sec-title">Beyond Engineering</h2>
+    <p class="sec-sub">What keeps me balanced</p>
+    <div class="life-bento">
+      <div class="bento life-card">
+        <div class="life-icon">🥋</div>
+        <h3>Karate</h3>
+        <p>Discipline, focus, and the pursuit of mastery — on and off the mat.</p>
+      </div>
+      <div class="bento life-card">
+        <div class="life-icon">🛠️</div>
+        <h3>Making</h3>
+        <p>Electronics, 3D printing, and weekend builds that turn ideas into reality.</p>
+      </div>
+      <div class="bento life-card">
+        <div class="life-icon">📚</div>
+        <h3>Lifelong Learning</h3>
+        <p>Constantly exploring new technologies, engineering fields, and ideas.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="section-wrap" id="contact">
+    <div class="contact-bento">
+      <div class="bento contact-main">
+        <h2>Let's Build Something</h2>
+        <p>Got a project idea, want to collaborate, or just want to talk engineering? I'm always open to connecting.</p>
+        <div class="cta-row">
+          <a href="https://www.linkedin.com/in/mohamedhhelal" target="_blank" rel="noopener" class="cta-btn cta-primary">Get in Touch</a>
+          <a href="https://github.com/flyingibnfirnas" target="_blank" class="cta-btn cta-outline">View GitHub</a>
+        </div>
+      </div>
+      <div class="bento contact-links-card">
+        <a href="https://github.com/flyingibnfirnas" target="_blank">→ GitHub</a>
+        <a href="https://www.linkedin.com/in/mohamedhhelal" target="_blank" rel="noopener">→ LinkedIn</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2026 Mohamed Helal — Flying Ibn Firnas
+  </footer>
+</body>
+</html>

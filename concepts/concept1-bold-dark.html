@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Concept 1 — Bold Dark | Flying Ibn Firnas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --orange: #e87a20;
+      --orange-dark: #c45e10;
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface-hover: #1a1a24;
+      --text: #e4e4e7;
+      --text-muted: #71717a;
+      --text-dim: #a1a1aa;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(12px);
+      background: rgba(10, 10, 15, 0.8);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    nav .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    nav .brand img {
+      height: 36px;
+      width: auto;
+    }
+
+    nav .brand span {
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--orange); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(232,122,32,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 700px; }
+
+    .hero img.hero-logo {
+      width: 140px;
+      margin-bottom: 2rem;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero h1 .accent {
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero .subtitle {
+      font-size: 1.25rem;
+      font-weight: 300;
+      color: var(--text-dim);
+      margin-bottom: 1rem;
+    }
+
+    .hero .intro {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      color: #fff;
+      border: none;
+    }
+
+    .btn-primary:hover { background: var(--orange-dark); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--orange);
+      color: var(--text);
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--orange);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 3rem;
+      font-size: 1rem;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .about-text {
+      color: var(--text-dim);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .stat {
+      padding: 1.5rem;
+      background: var(--surface);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--orange);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* EXPERTISE */
+    .expertise-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .expertise-card {
+      padding: 2rem 1.5rem;
+      background: var(--surface);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.3s;
+      cursor: default;
+    }
+
+    .expertise-card:hover {
+      border-color: rgba(232,122,32,0.3);
+      transform: translateY(-4px);
+      background: var(--surface-hover);
+    }
+
+    .expertise-icon {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .expertise-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .expertise-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.05);
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .project-card:hover {
+      border-color: rgba(232,122,32,0.3);
+      transform: translateY(-4px);
+    }
+
+    .project-thumb {
+      height: 180px;
+      background: linear-gradient(135deg, var(--surface-hover), var(--bg));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .project-info {
+      padding: 1.5rem;
+    }
+
+    .project-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-tag {
+      font-size: 0.7rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      background: rgba(232,122,32,0.1);
+      color: var(--orange);
+      font-weight: 500;
+    }
+
+    .project-info h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-info p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* HOBBIES */
+    .hobbies-row {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .hobby {
+      flex: 1;
+      min-width: 200px;
+      padding: 2rem;
+      background: var(--surface);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.05);
+      text-align: center;
+    }
+
+    .hobby-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+
+    .hobby h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+
+    .hobby p { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* CONTACT */
+    .contact-box {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--surface);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .contact-box h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .contact-box p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .contact-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 0.6rem 1.5rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .contact-links a:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#" class="brand">
+      <img src="../logo.png" alt="Logo">
+      <span>Flying Ibn Firnas</span>
+    </a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#expertise">Expertise</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#hobbies">Beyond Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <img src="../logo.png" alt="Flying Ibn Firnas" class="hero-logo">
+      <h1>Mohamed <span class="accent">Helal</span></h1>
+      <p class="subtitle">Engineer &bull; Maker &bull; Problem Solver</p>
+      <p class="intro">Building things that move, think, and fly. From embedded firmware to vehicle diagnostics, I turn complex engineering challenges into working solutions.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View My Work</a>
+        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <p class="section-label">About Me</p>
+    <h2 class="section-title">Engineer by Profession,<br>Builder by Nature</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Welcome! I'm Mohamed Helal, known online as <strong>Flying Ibn Firnas</strong> — named after Abbas ibn Firnas, the 9th-century polymath who dared to fly centuries before anyone thought it possible.</p>
+        <br>
+        <p>I'm passionate about engineering across multiple domains: from writing firmware for embedded systems and microcontrollers, to working on automotive diagnostics and aerospace systems. I believe the best engineers are the ones who never stop building, learning, and experimenting.</p>
+        <br>
+        <p>This website hosts my personal and professional projects, things I've built, problems I've solved, and ideas I'm exploring.</p>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-number">5+</div>
+          <div class="stat-label">Engineering Domains</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">10+</div>
+          <div class="stat-label">Projects Built</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">ESP32</div>
+          <div class="stat-label">STM32 &amp; More</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">&infin;</div>
+          <div class="stat-label">Curiosity</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="expertise">
+    <p class="section-label">Expertise</p>
+    <h2 class="section-title">What I Work With</h2>
+    <p class="section-desc">A multi-disciplinary engineering background spanning hardware, software, and everything in between.</p>
+    <div class="expertise-grid">
+      <div class="expertise-card">
+        <div class="expertise-icon">🔧</div>
+        <h3>Embedded Systems</h3>
+        <p>STM32, ESP32, Arduino — firmware development, RTOS, peripheral drivers, and hardware interfacing.</p>
+      </div>
+      <div class="expertise-card">
+        <div class="expertise-icon">💻</div>
+        <h3>Software</h3>
+        <p>C/C++, Python, desktop applications, GUI tools, and system-level programming.</p>
+      </div>
+      <div class="expertise-card">
+        <div class="expertise-icon">🚗</div>
+        <h3>Automotive</h3>
+        <p>Vehicle diagnostics, OBD protocols, CAN bus communication, and automotive ECU development.</p>
+      </div>
+      <div class="expertise-card">
+        <div class="expertise-icon">🔍</div>
+        <h3>Diagnostics</h3>
+        <p>System troubleshooting, diagnostic tool development, protocol analysis, and fault tracing.</p>
+      </div>
+      <div class="expertise-card">
+        <div class="expertise-icon">✈️</div>
+        <h3>Aerospace</h3>
+        <p>Avionics concepts, flight systems, and the dream of making things fly — inspired by Ibn Firnas himself.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <p class="section-label">Projects</p>
+    <h2 class="section-title">Things I've Built</h2>
+    <p class="section-desc">A selection of personal and professional projects. More on GitHub.</p>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-thumb">📷</div>
+        <div class="project-info">
+          <div class="project-tags">
+            <span class="project-tag">Raspberry Pi</span>
+            <span class="project-tag">Camera</span>
+          </div>
+          <h3>RaspiCam</h3>
+          <p>Camera interfacing and image processing project built on Raspberry Pi hardware.</p>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb">🎮</div>
+        <div class="project-info">
+          <div class="project-tags">
+            <span class="project-tag">C++</span>
+            <span class="project-tag">ImGui</span>
+          </div>
+          <h3>ImGui Applications</h3>
+          <p>Desktop GUI applications built with Dear ImGui for rapid prototyping and tooling.</p>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb">⚡</div>
+        <div class="project-info">
+          <div class="project-tags">
+            <span class="project-tag">STM32</span>
+            <span class="project-tag">Embedded</span>
+          </div>
+          <h3>STM32 Projects</h3>
+          <p>Microcontroller firmware, peripheral drivers, and embedded system experiments.</p>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb">📡</div>
+        <div class="project-info">
+          <div class="project-tags">
+            <span class="project-tag">ESP32</span>
+            <span class="project-tag">IoT</span>
+          </div>
+          <h3>ESP Projects</h3>
+          <p>Wi-Fi/Bluetooth-enabled IoT devices and embedded applications with ESP32.</p>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb">🕹️</div>
+        <div class="project-info">
+          <div class="project-tags">
+            <span class="project-tag">Raylib</span>
+            <span class="project-tag">Game Dev</span>
+          </div>
+          <h3>TicTacToe &amp; Games</h3>
+          <p>Simple games and graphical experiments built with Raylib and C++.</p>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb">⚙️</div>
+        <div class="project-info">
+          <div class="project-tags">
+            <span class="project-tag">C++</span>
+            <span class="project-tag">Qt / Interface</span>
+          </div>
+          <h3>Interface Tools</h3>
+          <p>Desktop interface and tooling applications for engineering workflows.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="hobbies">
+    <p class="section-label">Beyond Engineering</p>
+    <h2 class="section-title">Life Outside the Lab</h2>
+    <p class="section-desc">Engineering is my profession, but there's more to the story.</p>
+    <div class="hobbies-row">
+      <div class="hobby">
+        <div class="hobby-icon">🥋</div>
+        <h3>Karate</h3>
+        <p>Discipline, focus, and continuous improvement — on and off the mat.</p>
+      </div>
+      <div class="hobby">
+        <div class="hobby-icon">🛠️</div>
+        <h3>Making &amp; Tinkering</h3>
+        <p>Always building something — electronics, 3D prints, or weekend hacks.</p>
+      </div>
+      <div class="hobby">
+        <div class="hobby-icon">📚</div>
+        <h3>Learning</h3>
+        <p>Constantly exploring new technologies, frameworks, and engineering disciplines.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-box">
+      <h2>Let's Connect</h2>
+      <p>Interested in collaborating, have a question, or just want to say hello?</p>
+      <div class="contact-links">
+        <a href="https://github.com/flyingibnfirnas" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/mohamedhhelal" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2026 Mohamed Helal — Flying Ibn Firnas. All rights reserved.
+  </footer>
+</body>
+</html>

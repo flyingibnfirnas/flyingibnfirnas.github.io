@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fighter Aircraft Power Plant Model — Flying Ibn Firnas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    /* BACK LINK */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      margin-bottom: 2.5rem;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--orange); }
+
+    /* PROJECT HERO */
+    .project-hero {
+      padding: 5rem 4rem 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project-hero .category-badge {
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      background: var(--orange-glow);
+      border: 1px solid rgba(232,122,32,0.2);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-hero .project-meta {
+      font-size: 0.9rem;
+      color: var(--orange);
+      margin-bottom: 1.5rem;
+    }
+
+    .project-hero .project-intro {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      max-width: 700px;
+    }
+
+    /* CONTENT SECTIONS */
+    .project-content { padding: 3rem 4rem; }
+
+    .content-block { margin-bottom: 3.5rem; }
+
+    .content-block h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .content-block h2::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .content-block p {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      max-width: 700px;
+    }
+
+    /* HIGHLIGHTS */
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .highlight-card {
+      padding: 1.5rem;
+      background: var(--surface);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .highlight-card .hl-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+    .highlight-card h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .highlight-card p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* KEYWORDS */
+    .keywords {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .kw {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.9rem;
+      border-radius: 6px;
+      background: var(--orange-glow);
+      color: var(--orange);
+      font-weight: 500;
+    }
+
+    /* IMAGE GALLERY */
+    .gallery {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .gallery-full {
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .gallery-full:hover { border-color: rgba(232,122,32,0.4); }
+
+    .gallery-full img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .gallery-full .img-caption {
+      padding: 0.75rem 1rem;
+      background: var(--surface);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .gallery-full .img-caption .zoom-hint {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    .gallery-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    /* NAV BETWEEN PROJECTS */
+    .project-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3rem 4rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .project-nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .project-nav a:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
+    @media (max-width: 900px) {
+      .project-hero { padding: 3rem 1.5rem; }
+      .project-content { padding: 2rem 1.5rem; }
+      .project-nav { padding: 2rem 1.5rem; }
+      .gallery-row { grid-template-columns: 1fr; }
+      .highlights { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <a href="index.html" class="sidebar-brand">
+      <img src="logo.png" alt="Logo">
+      <h1>Flying Ibn Firnas</h1>
+      <p class="name">Mohamed Helal</p>
+    </a>
+    <nav class="sidebar-nav">
+      <a href="index.html"><span class="nav-icon">◈</span> Home</a>
+      <a href="index.html#about"><span class="nav-icon">◇</span> About</a>
+      <a href="index.html#skills"><span class="nav-icon">◆</span> Skills</a>
+      <a href="index.html#projects" class="active"><span class="nav-icon">▣</span> Projects</a>
+      <a href="index.html#hobbies"><span class="nav-icon">☆</span> Life</a>
+      <a href="index.html#contact"><span class="nav-icon">◉</span> Contact</a>
+    </nav>
+    <div class="sidebar-socials">
+      <a href="https://github.com/flyingibnfirnas" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/mohamedhhelal" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="project-hero">
+      <a href="index.html#projects" class="back-link">← Back to Projects</a>
+      <span class="category-badge">Aerospace &bull; Simulation</span>
+      <h1>Fighter Aircraft Power Plant Model</h1>
+      <p class="project-meta">Amel Group &bull; Professional Project</p>
+      <p class="project-intro">
+        A complete generic turbofan engine simulation for military fighter aircraft, designed to be customized for any specific engine model of the same class. Built from mathematical models through to production-grade C/C++ implementation.
+      </p>
+    </div>
+
+    <div class="project-content">
+
+      <div class="content-block">
+        <h2>Overview</h2>
+        <p>
+          During my employment at <strong>Amel Group</strong>, I was responsible for simulating a military fighter aircraft power plant (turbofan engine). I created a complete generic turbofan engine model that could be customized to match any specific engine model of the same class. During the design phase, the model was verified and all the parameters were tuned by creating a complete simulation on Matlab/Simulink. The design was implemented and debugged using C/C++ via Microsoft Visual Studio. The model was exhaustively tested through a series of detailed planned unit tests. Afterwards, the power plant system was integrated with the rest of the aircraft systems and was approved through rigorous integration testing.
+        </p>
+      </div>
+
+      <div class="content-block">
+        <h2>Key Highlights</h2>
+        <div class="highlights">
+          <div class="highlight-card">
+            <div class="hl-icon">🔬</div>
+            <h4>Model Design</h4>
+            <p>Generic turbofan engine model customizable to match any specific engine of the same class</p>
+          </div>
+          <div class="highlight-card">
+            <div class="hl-icon">📐</div>
+            <h4>Matlab/Simulink</h4>
+            <p>Complete simulation for design verification and parameter tuning</p>
+          </div>
+          <div class="highlight-card">
+            <div class="hl-icon">💻</div>
+            <h4>C/C++ Implementation</h4>
+            <p>Production code implemented and debugged in Microsoft Visual Studio</p>
+          </div>
+          <div class="highlight-card">
+            <div class="hl-icon">✅</div>
+            <h4>Rigorous Testing</h4>
+            <p>Exhaustive unit testing followed by full integration testing with aircraft systems</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>System Architecture</h2>
+        <p>The power plant system encompasses the complete engine control and monitoring chain — from the DEEC module and fuel control to cockpit indicators, malfunction detection, and integration with the electrical, hydraulic, and fuel systems.</p>
+        <div class="gallery">
+          <div class="gallery-full" onclick="openLightbox(this)">
+            <img src="images/powerplant-diagram.png" alt="Power Plant System Architecture">
+            <div class="img-caption">
+              <span>Power Plant System Architecture — Full system block diagram showing engine modules, DEEC, indicators, malfunction detection, and subsystem interfaces</span>
+              <span class="zoom-hint">Click to zoom</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Simulink Model</h2>
+        <p>The complete engine model was first built and validated in Matlab/Simulink, allowing for rapid iteration on parameters and verification against known engine performance data before C/C++ implementation.</p>
+        <div class="gallery">
+          <div class="gallery-full" onclick="openLightbox(this)">
+            <img src="images/simulink-model.png" alt="Matlab/Simulink Engine Model">
+            <div class="img-caption">
+              <span>Matlab/Simulink Turbofan Engine Model — Complete simulation with all engine stages and control logic</span>
+              <span class="zoom-hint">Click to zoom</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Engine Reference</h2>
+        <p>The model is based on a low-bypass-ratio mixed-flow turbofan engine architecture typical of modern fighter aircraft, covering all major modules from fan intake through the afterburner section.</p>
+        <div class="gallery">
+          <div class="gallery-full" onclick="openLightbox(this)">
+            <img src="images/engine-crosssection.png" alt="Turbofan Engine Cross-Section">
+            <div class="img-caption">
+              <span>Turbofan Engine Cross-Section — Fan module, core engine, fan drive turbine, and afterburner module</span>
+              <span class="zoom-hint">Click to zoom</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Technologies &amp; Keywords</h2>
+        <div class="keywords">
+          <span class="kw">C/C++ Programming</span>
+          <span class="kw">Matlab/Simulink</span>
+          <span class="kw">Modeling</span>
+          <span class="kw">Simulation</span>
+          <span class="kw">Turbofan Engine</span>
+          <span class="kw">Unit Testing</span>
+          <span class="kw">Integration Testing</span>
+          <span class="kw">Military Simulators</span>
+          <span class="kw">Visual Studio</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="project-nav">
+      <a href="index.html#projects">← All Projects</a>
+      <a href="project-robotics.html">Robotic Calibration →</a>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <script>
+    function openLightbox(el) {
+      const img = el.querySelector('img');
+      document.getElementById('lightbox-img').src = img.src;
+      document.getElementById('lightbox').classList.add('active');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>
