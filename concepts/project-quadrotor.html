@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Automated Tape Punch Machine — Flying Ibn Firnas</title>
+  <title>Quadrotor Hovering Stability and Control — Flying Ibn Firnas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -92,6 +92,8 @@
       max-width: 700px;
     }
 
+    .content-block p + p { margin-top: 1rem; }
+
     .highlights {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -163,82 +165,24 @@
       opacity: 0.5;
     }
 
-    .video-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-      max-width: 560px;
-    }
-
-    .video-card {
-      display: block;
-      border-radius: 10px;
-      overflow: hidden;
+    .report-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 1.25rem;
+      padding: 0.75rem 1.25rem;
       background: var(--surface);
       border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-dim);
       text-decoration: none;
-      color: inherit;
-      transition: border-color 0.2s, transform 0.2s;
+      font-size: 0.9rem;
+      transition: border-color 0.2s, color 0.2s;
     }
 
-    .video-card:hover {
-      border-color: rgba(232,122,32,0.4);
-      transform: translateY(-2px);
-    }
-
-    .video-card .video-thumb {
-      position: relative;
-      aspect-ratio: 16 / 9;
-      background: #111;
-      overflow: hidden;
-    }
-
-    .video-card .video-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .video-card .play-btn {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,0.35);
-      transition: background 0.2s;
-    }
-
-    .video-card:hover .play-btn { background: rgba(0,0,0,0.5); }
-
-    .video-card .play-btn span {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: var(--orange);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-      padding-left: 3px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-    }
-
-    .video-card .video-caption {
-      padding: 0.75rem 1rem;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .video-card .video-caption .yt-hint {
-      font-size: 0.7rem;
-      opacity: 0.6;
+    .report-link:hover {
+      border-color: var(--orange);
+      color: var(--orange);
     }
 
     .project-nav {
@@ -297,11 +241,11 @@
   <div class="main">
     <div class="project-hero">
       <a href="concept2-multipage.html#projects" class="back-link">← Back to Projects</a>
-      <span class="category-badge">Mechatronics &bull; Research</span>
-      <h1>Automated Tape Punch Machine</h1>
-      <p class="project-meta">Undergraduate Research Assistant &bull; Ryerson University</p>
+      <span class="category-badge">Controls &bull; Aerospace</span>
+      <h1>Quadrotor Hovering Stability and Control</h1>
+      <p class="project-meta">Advanced Control Systems &bull; Ryerson University &bull; with Simon Lam</p>
       <p class="project-intro">
-        A complete electromechanical tape punch system — CAD-designed punch-die mechanics, stepper-driven feed, and a hardwired PLC controller for automated hole patterns used in precise rivet insertion.
+        A comparative study of linear control techniques for quadrotor hovering — PID, LQR, feed-forward tracking, and robust servomechanism — simulated on both linearized and nonlinear dynamics in Matlab/Simulink.
       </p>
     </div>
 
@@ -310,83 +254,71 @@
       <div class="content-block">
         <h2>Overview</h2>
         <p>
-          As an undergraduate research assistant at Ryerson University, I designed and assembled a mechanical system for tape punching. The machine creates a pattern of holes specially designed for accurate rivet insertion. A gear system driven by a stepper motor feeds the tape, and a guiding and positioning system keeps the tape precise relative to the punch-die. The system was fine-tuned and successfully tested. Alongside the mechanics, I designed, hardwired, and tested a controller for full automation using a <strong>PLC</strong>, stepper driver, and proximity sensors for tape and punch position feedback.
+          Quadrotors are multi-rotor UAVs that use four propellers to control full pose (position and orientation). Their nonlinear dynamics make hovering stability a classic control challenge — and a strong platform for comparing controller designs.
         </p>
+        <p>
+          In this Advanced Control Systems project at Ryerson University (co-authored with Simon Lam), we derived a full kinematic and dynamic model using Newton–Euler formulation, linearized the altitude and attitude dynamics, verified controllability and observability, then designed and compared four linear control approaches. Every controller was simulated against both the linearized plant and the full nonlinear model.
+        </p>
+        <a class="report-link" href="../docs/quadrotor-hovering-control.pdf" target="_blank" rel="noopener">
+          📄 Full Project Report (PDF)
+        </a>
       </div>
 
       <div class="content-block">
         <h2>Key Highlights</h2>
         <div class="highlights">
           <div class="highlight-card">
-            <div class="hl-icon">⚙️</div>
-            <h4>Punch-Die Mechanics</h4>
-            <p>Custom mechanical design for accurate hole patterns used in rivet insertion</p>
+            <div class="hl-icon">📐</div>
+            <h4>Full Dynamics Model</h4>
+            <p>Newton–Euler kinematics and dynamics with 12-state pose formulation, then linearized for hover</p>
           </div>
           <div class="highlight-card">
-            <div class="hl-icon">🔄</div>
-            <h4>Stepper Feed System</h4>
-            <p>Gear-driven stepper motor for controlled tape feeding and positioning</p>
+            <div class="hl-icon">🎛️</div>
+            <h4>PID Control</h4>
+            <p>SISO-tuned and auto-tuned PID for altitude, pitch, roll, and yaw stabilization</p>
           </div>
           <div class="highlight-card">
-            <div class="hl-icon">📟</div>
-            <h4>PLC Automation</h4>
-            <p>Hardwired PLC controller with ladder logic for the full punch sequence</p>
+            <div class="hl-icon">📊</div>
+            <h4>LQR Design</h4>
+            <p>Optimal state-feedback via Algebraic Riccati solution for fast attitude recovery</p>
           </div>
           <div class="highlight-card">
-            <div class="hl-icon">📡</div>
-            <h4>Sensor Feedback</h4>
-            <p>Proximity sensors for locating both tape and punch position</p>
+            <div class="hl-icon">🎯</div>
+            <h4>Tracking Controllers</h4>
+            <p>Feed-forward constant tracking and robust servomechanism for constant and sinusoid references</p>
           </div>
         </div>
       </div>
 
       <div class="content-block">
-        <h2>Mechanical Tape Punch</h2>
-        <p>Designed and assembled in CATIA V5 — stepper-driven feed, guiding/positioning system, and punch-die assembly for precise hole patterns.</p>
+        <h2>Modelling &amp; Analysis</h2>
+        <p>
+          The quadrotor was modelled with body and inertial frames, opposite rotor spin pairs for yaw torque balance, and control inputs mapped from rotor speeds to thrust and moments. Assumptions included rigid body/propellers, symmetry, thrust/drag proportional to rotor speed, and neglected translational drag and ground effect.
+        </p>
+        <p>
+          The hover-relevant state vector covers altitude and attitude with their rates. Controllability and observability matrices were full rank (8), with no transmission zeros overlapping tracking poles — satisfying the conditions for the controllers below.
+        </p>
         <div class="gallery">
           <div class="gallery-row">
             <div class="gallery-full" onclick="openLightbox(this)">
-              <img src="images/tapepunch-cad.png" alt="Tape Punch CAD Assembly">
+              <img src="images/quadrotor-topview.jpg" alt="Quadrotor top-view rotor diagram">
               <div class="img-caption">
-                <span>Full CAD Assembly — CATIA V5 mechanical design</span>
+                <span>Figure 1 — Top-view rotor layout and spin directions</span>
                 <span class="zoom-hint">Click to zoom</span>
               </div>
             </div>
             <div class="gallery-full" onclick="openLightbox(this)">
-              <img src="images/tapepunch-cad-multiview.png" alt="Tape Punch Multi-View">
+              <img src="images/quadrotor-frames.jpg" alt="Quadrotor coordinate frames">
               <div class="img-caption">
-                <span>Multi-View Layout — isometric, plan, and elevation</span>
+                <span>Figure 2 — Body and Earth coordinate frames with thrust vectors</span>
                 <span class="zoom-hint">Click to zoom</span>
               </div>
             </div>
           </div>
-          <div class="gallery-row">
-            <div class="gallery-full" onclick="openLightbox(this)">
-              <img src="images/tapepunch-full.png" alt="Full Machine Prototype">
-              <div class="img-caption">
-                <span>Assembled Prototype — mechanics with control enclosure</span>
-                <span class="zoom-hint">Click to zoom</span>
-              </div>
-            </div>
-            <div class="gallery-full" onclick="openLightbox(this)">
-              <img src="images/tapepunch-prototype.png" alt="Tape Punch Prototype Detail">
-              <div class="img-caption">
-                <span>Prototype Detail — feed system, guides, and drive motors</span>
-                <span class="zoom-hint">Click to zoom</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="content-block">
-        <h2>Tape Punch Controller</h2>
-        <p>A programmable logic controller was coded to run the automated punching sequence. A stepper motor driver controls tape feed; proximity sensors provide feedback. Power supply, relays, and hardwired schematics complete the industrial-style control box.</p>
-        <div class="gallery">
           <div class="gallery-full" onclick="openLightbox(this)">
-            <img src="images/tapepunch-controller.png" alt="Tape Punch Controller">
+            <img src="images/quadrotor-simulink-dynamics.jpg" alt="Nonlinear quadrotor Simulink dynamics">
             <div class="img-caption">
-              <span>Controller Enclosure — PLC, power supply, terminal blocks, and hardwiring</span>
+              <span>Simulink — Nonlinear quadrotor dynamics plant</span>
               <span class="zoom-hint">Click to zoom</span>
             </div>
           </div>
@@ -394,47 +326,110 @@
       </div>
 
       <div class="content-block">
-        <h2>Demonstration</h2>
-        <p>Video demo of the automated tape punch machine in operation.</p>
-        <div class="video-grid">
-          <a class="video-card" href="https://www.youtube.com/watch?v=PVNBTLsdlog" target="_blank" rel="noopener">
-            <div class="video-thumb">
-              <img src="https://img.youtube.com/vi/PVNBTLsdlog/hqdefault.jpg" alt="Tape Punch Demo">
-              <div class="play-btn"><span>▶</span></div>
+        <h2>Controllers</h2>
+        <p>
+          <strong>PID:</strong> Classical PID designed with a SISO approach (altitude, pitch, roll, yaw channels) and compared against Matlab auto-tuning. Auto-tune recovered faster; SISO was slower with almost no undershoot.
+        </p>
+        <p>
+          <strong>LQR:</strong> Linear Quadratic Regulator minimizing a quadratic cost; gains from the Algebraic Riccati equation. Attitude stabilization was particularly fast on the linear plant.
+        </p>
+        <p>
+          <strong>Feed-forward tracking:</strong> Constant reference tracking with strong altitude (~3&nbsp;s) and attitude (~1&nbsp;s) responses on the linear model.
+        </p>
+        <p>
+          <strong>Robust servomechanism:</strong> Augmented-system design for constant and sinusoid tracking with disturbance rejection — including sine-wave altitude tracking with constant attitude setpoints.
+        </p>
+        <div class="gallery">
+          <div class="gallery-row">
+            <div class="gallery-full" onclick="openLightbox(this)">
+              <img src="images/quadrotor-simulink-pid.jpg" alt="PID control Simulink diagram">
+              <div class="img-caption">
+                <span>PID control architecture — four-channel closed loop</span>
+                <span class="zoom-hint">Click to zoom</span>
+              </div>
             </div>
-            <div class="video-caption">
-              <span>Automated Tape Punch — Demo</span>
-              <span class="yt-hint">YouTube ↗</span>
+            <div class="gallery-full" onclick="openLightbox(this)">
+              <img src="images/quadrotor-simulink-lqr.jpg" alt="LQR state-feedback Simulink">
+              <div class="img-caption">
+                <span>LQR / state-feedback on the linear quadrotor model</span>
+                <span class="zoom-hint">Click to zoom</span>
+              </div>
             </div>
-          </a>
+          </div>
+          <div class="gallery-row">
+            <div class="gallery-full" onclick="openLightbox(this)">
+              <img src="images/quadrotor-simulink-pid-nonlinear.jpg" alt="PID on nonlinear plant">
+              <div class="img-caption">
+                <span>PID on nonlinear quadrotor dynamics</span>
+                <span class="zoom-hint">Click to zoom</span>
+              </div>
+            </div>
+            <div class="gallery-full" onclick="openLightbox(this)">
+              <img src="images/quadrotor-simulink-feedforward.jpg" alt="Feed-forward tracking Simulink">
+              <div class="img-caption">
+                <span>Feed-forward tracking on nonlinear dynamics</span>
+                <span class="zoom-hint">Click to zoom</span>
+              </div>
+            </div>
+          </div>
+          <div class="gallery-full" onclick="openLightbox(this)">
+            <img src="images/quadrotor-motor-speeds.jpg" alt="Control inputs to motor speeds">
+            <div class="img-caption">
+              <span>Conversion from control inputs to individual motor speeds</span>
+              <span class="zoom-hint">Click to zoom</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Results</h2>
+        <p>
+          All four methods stabilized both the linearized and nonlinear plants, with nonlinearities clearly degrading response quality relative to the linear case. Controllers differed mainly in settling time, undershoot, and tracking bandwidth — confirming that linear designs remain effective for hover when validated against the full nonlinear model.
+        </p>
+        <div class="gallery">
+          <div class="gallery-full" onclick="openLightbox(this)">
+            <img src="images/quadrotor-results-pid.jpg" alt="PID auto-tuning stabilization results">
+            <div class="img-caption">
+              <span>Linear plant — auto-tuned PID stabilization (altitude, pitch, roll, yaw)</span>
+              <span class="zoom-hint">Click to zoom</span>
+            </div>
+          </div>
+          <div class="gallery-full" onclick="openLightbox(this)">
+            <img src="images/quadrotor-results-lqr.jpg" alt="LQR stabilization results">
+            <div class="img-caption">
+              <span>Linear plant — LQR stabilization response</span>
+              <span class="zoom-hint">Click to zoom</span>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="content-block">
         <h2>Technologies &amp; Keywords</h2>
         <div class="keywords">
-          <span class="kw">Mechanical Design</span>
-          <span class="kw">CATIA</span>
-          <span class="kw">Stepper Motor</span>
-          <span class="kw">Punch-Die Design</span>
-          <span class="kw">Positioning &amp; Guiding</span>
-          <span class="kw">Gear System</span>
-          <span class="kw">Systems Integration</span>
-          <span class="kw">Proximity Sensors</span>
-          <span class="kw">PLC</span>
-          <span class="kw">Stepper Driver</span>
-          <span class="kw">Power Supply</span>
-          <span class="kw">Relays</span>
-          <span class="kw">Ladder Programming</span>
-          <span class="kw">Hardwiring</span>
+          <span class="kw">PID</span>
+          <span class="kw">Linear Quadratic Regulator</span>
+          <span class="kw">Feed-forward Tracking</span>
+          <span class="kw">Robust Servomechanism</span>
+          <span class="kw">Attitude Control</span>
+          <span class="kw">Hover Stability</span>
+          <span class="kw">Newton–Euler</span>
+          <span class="kw">Model Linearization</span>
+          <span class="kw">Controllability</span>
+          <span class="kw">Observability</span>
+          <span class="kw">Matlab</span>
+          <span class="kw">Simulink</span>
+          <span class="kw">UAV</span>
+          <span class="kw">Quadrotor</span>
         </div>
       </div>
 
     </div>
 
     <div class="project-nav">
-      <a href="project-helicopter.html">← 3 DOF Helicopter</a>
-      <a href="project-quadrotor.html">Quadrotor Control →</a>
+      <a href="project-tapepunch.html">← Tape Punch</a>
+      <a href="concept2-multipage.html#projects">All Projects →</a>
     </div>
   </div>
 
