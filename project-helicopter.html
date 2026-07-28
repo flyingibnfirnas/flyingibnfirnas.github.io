@@ -234,6 +234,26 @@
       opacity: 0.6;
     }
 
+    .report-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 1.25rem;
+      padding: 0.75rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .report-link:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
     .project-nav {
       display: flex;
       justify-content: space-between;
@@ -305,6 +325,9 @@
         <p>
           For my fourth-year graduation project at Ryerson University, I designed and implemented a system of tuned, closed-loop <strong>PID controllers</strong> to achieve a completely autonomous <strong>3 DOF Quanser helicopter</strong>. Full system analysis and identification were conducted and simulated using <strong>Matlab/Simulink/Quarc</strong> realtime computer platform. A position/velocity trajectory planner was designed and incorporated into the system for performing complete mission scenarios. I also integrated a <strong>modular sensor package (MSP)</strong> into the helicopter system for pitch and elevation angles estimation for control feedback. <strong>Gain scheduling</strong> was implemented for advanced mission scenarios, in which the controller must move the helicopter to a predetermined location to pick a payload using a magnetic grapple and return to the start point. The helicopter was tested for accuracy and robustness in different missions using the helicopter’s internal encoders as well as the designed MSP.
         </p>
+        <a class="report-link" href="docs/helicopter-3dof-control.pdf" target="_blank" rel="noopener">
+          📄 Full Project Report (PDF)
+        </a>
       </div>
 
       <div class="content-block">
