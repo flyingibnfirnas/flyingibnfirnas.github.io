@@ -1,0 +1,18 @@
+# Dependencies
+experience/node_modules/
+experience/dist/
+
+# Local checkpoints / backups (not for deploy)
+_checkpoint_*/
+experience/_checkpoint_*/
+experience/_assets_original_models/
+
+# Logs / cache
+*.log
+.DS_Store
+experience/.vite/
+experience/node_modules/.tmp/
+
+# Editor
+.idea/
+.vscode/
