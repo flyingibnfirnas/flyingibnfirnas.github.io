@@ -6,7 +6,7 @@ import { careerChapters } from '@/data/careerChapters'
 import { useShotTuner } from '@/components/experience/ShotTunerContext'
 
 /** Desktop `server_rack_and_console_v3.glb` → experience/public/models/server_rack.glb */
-export const SERVER_MODEL_URL = '/models/server_rack.glb'
+export const SERVER_MODEL_URL = `${import.meta.env.BASE_URL}models/server_rack.glb`
 
 /** On-screen rack height */
 const SERVER_TARGET_HEIGHT = 4.2

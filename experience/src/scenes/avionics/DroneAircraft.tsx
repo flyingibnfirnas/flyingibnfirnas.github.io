@@ -6,7 +6,7 @@ import { careerChapters } from '@/data/careerChapters'
 import { useShotTuner } from '@/components/experience/ShotTunerContext'
 
 /** Place drone GLB at: experience/public/models/drone.glb */
-export const DRONE_MODEL_URL = '/models/drone.glb'
+export const DRONE_MODEL_URL = `${import.meta.env.BASE_URL}models/drone.glb`
 
 /** On-screen span (max AABB axis) in world units */
 export const DRONE_TARGET_SIZE = 2.85

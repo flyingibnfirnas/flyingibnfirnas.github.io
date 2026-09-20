@@ -6,7 +6,7 @@ import { careerChapters } from '@/data/careerChapters'
 import { useShotTuner } from '@/components/experience/ShotTunerContext'
 
 /** Place robot GLB at: experience/public/models/robot.glb */
-export const ROBOT_MODEL_URL = '/models/robot.glb'
+export const ROBOT_MODEL_URL = `${import.meta.env.BASE_URL}models/robot.glb`
 
 const PLINTH_TOP = 0.1
 

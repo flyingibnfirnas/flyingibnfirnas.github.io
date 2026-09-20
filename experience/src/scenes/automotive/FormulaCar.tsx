@@ -6,7 +6,7 @@ import { careerChapters } from '@/data/careerChapters'
 import { useShotTuner } from '@/components/experience/ShotTunerContext'
 
 /** Place CT5 GLB at: experience/public/models/ct5.glb */
-export const CT5_MODEL_URL = '/models/ct5.glb'
+export const CT5_MODEL_URL = `${import.meta.env.BASE_URL}models/ct5.glb`
 
 type Props = {
   accent?: string

@@ -8,7 +8,7 @@ import { scrollProgress } from '@/lib/scrollStore'
 import { useShotTuner } from '@/components/experience/ShotTunerContext'
 
 /** Place a real F-16 GLB at: experience/public/models/f16.glb */
-export const F16_MODEL_URL = '/models/f16.glb'
+export const F16_MODEL_URL = `${import.meta.env.BASE_URL}models/f16.glb`
 
 type Props = {
   accent?: string

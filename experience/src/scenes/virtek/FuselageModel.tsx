@@ -3,7 +3,7 @@ import { Suspense, useMemo } from 'react'
 import * as THREE from 'three'
 
 /** Desktop `airb_fuselage.glb` → experience/public/models/airb_fuselage.glb */
-export const FUSELAGE_MODEL_URL = '/models/airb_fuselage.glb'
+export const FUSELAGE_MODEL_URL = `${import.meta.env.BASE_URL}models/airb_fuselage.glb`
 
 /** On-screen length along the long (X) axis */
 export const FUSELAGE_TARGET_LENGTH = 4.6
