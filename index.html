@@ -592,23 +592,31 @@
         })
         .filter(Boolean)
 
+      let lockUntil = 0
+
       const setActive = (id) => {
         for (const { id: sectionId, link } of sections) {
           link.classList.toggle('active', sectionId === id)
         }
       }
 
-      for (const { id, link } of sections) {
-        link.addEventListener('click', () => setActive(id))
-      }
-
       const updateFromScroll = () => {
-        const marker = window.scrollY + Math.min(220, window.innerHeight * 0.28)
+        if (performance.now() < lockUntil) return
+        const marker = Math.min(200, window.innerHeight * 0.25)
         let current = sections[0].id
         for (const { id, el } of sections) {
-          if (el.offsetTop <= marker) current = id
+          // getBoundingClientRect is document-relative; offsetTop is not reliable here
+          if (el.getBoundingClientRect().top <= marker) current = id
         }
         setActive(current)
+      }
+
+      for (const { id, link } of sections) {
+        link.addEventListener('click', () => {
+          setActive(id)
+          // Keep click highlight while smooth-scroll animates
+          lockUntil = performance.now() + 800
+        })
       }
 
       window.addEventListener('scroll', updateFromScroll, { passive: true })
