@@ -578,5 +578,43 @@
       </div>
     </div>
   </div>
+
+  <script>
+    (function () {
+      const links = Array.from(document.querySelectorAll('.sidebar-nav a[href^="#"]'))
+      if (!links.length) return
+
+      const sections = links
+        .map((link) => {
+          const id = link.getAttribute('href').slice(1)
+          const el = document.getElementById(id)
+          return el ? { id, el, link } : null
+        })
+        .filter(Boolean)
+
+      const setActive = (id) => {
+        for (const { id: sectionId, link } of sections) {
+          link.classList.toggle('active', sectionId === id)
+        }
+      }
+
+      for (const { id, link } of sections) {
+        link.addEventListener('click', () => setActive(id))
+      }
+
+      const updateFromScroll = () => {
+        const marker = window.scrollY + Math.min(220, window.innerHeight * 0.28)
+        let current = sections[0].id
+        for (const { id, el } of sections) {
+          if (el.offsetTop <= marker) current = id
+        }
+        setActive(current)
+      }
+
+      window.addEventListener('scroll', updateFromScroll, { passive: true })
+      window.addEventListener('resize', updateFromScroll)
+      updateFromScroll()
+    })()
+  </script>
 </body>
 </html>
