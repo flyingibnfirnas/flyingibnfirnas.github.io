@@ -1,8 +1,23 @@
+import { useProgress } from '@react-three/drei'
 import { useMemo } from 'react'
 import { careerChapters, chapterProgressBounds } from '@/data/careerChapters'
 import { beatVisibility } from '@/lib/cameraPath'
 import { scrollToProgress } from '@/lib/scrollStore'
 import { useExperience } from './ExperienceContext'
+
+function ModelLoadingHud() {
+  const { active, progress, item } = useProgress()
+  if (!active) return null
+  const label = item?.split('/').pop() || 'assets'
+  return (
+    <div className="model-loading-hud" aria-live="polite">
+      <span>Loading {label}</span>
+      <div className="model-loading-track">
+        <div className="model-loading-fill" style={{ width: `${Math.round(progress)}%` }} />
+      </div>
+    </div>
+  )
+}
 
 export function ChapterContent() {
   const { progress, chapterIndex, localProgress, reducedMotion } = useExperience()
@@ -113,6 +128,8 @@ export function ChapterContent() {
         <span>Scroll to begin</span>
         <div className="scroll-line" />
       </div>
+
+      <ModelLoadingHud />
 
       <div className="progress-rail" aria-hidden="true">
         <div className="progress-fill" style={{ height: `${progress * 100}%` }} />

@@ -6,7 +6,8 @@ import { CT5_MODEL_URL } from '@/scenes/automotive/FormulaCar'
 import { FUSELAGE_MODEL_URL } from '@/scenes/virtek/FuselageModel'
 import { SERVER_MODEL_URL } from '@/scenes/amd/ServerRack'
 
-const MODEL_URLS = [
+/** One hero GLB per hangar bay, in chapter order */
+export const CHAPTER_MODEL_URLS = [
   DRONE_MODEL_URL,
   ROBOT_MODEL_URL,
   F16_MODEL_URL,
@@ -15,12 +16,24 @@ const MODEL_URLS = [
   SERVER_MODEL_URL,
 ] as const
 
-/**
- * Kick off GLB downloads as early as the JS bundle runs (before Canvas mount).
- * Third arg enables MeshoptDecoder for meshopt-compressed assets.
- */
+const preloaded = new Set<string>()
+
+function preloadUrl(url: string) {
+  if (preloaded.has(url)) return
+  preloaded.add(url)
+  useGLTF.preload(url, true, true)
+}
+
+/** First paint: only the opening drone (~0.4MB). */
 export function preloadExperienceModels() {
-  for (const url of MODEL_URLS) {
-    useGLTF.preload(url, true, true)
+  preloadUrl(CHAPTER_MODEL_URLS[0])
+}
+
+/** Warm previous/current/next bays so timeline jumps and handoffs stay smooth. */
+export function preloadAroundChapter(chapterIndex: number) {
+  const start = Math.max(0, chapterIndex - 1)
+  const end = Math.min(CHAPTER_MODEL_URLS.length - 1, chapterIndex + 1)
+  for (let i = start; i <= end; i++) {
+    preloadUrl(CHAPTER_MODEL_URLS[i])
   }
 }

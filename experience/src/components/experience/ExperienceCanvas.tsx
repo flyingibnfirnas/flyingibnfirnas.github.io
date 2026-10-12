@@ -3,52 +3,60 @@ import {
   AdaptiveDpr,
   AdaptiveEvents,
   Environment,
-  Preload,
-  useGLTF,
 } from '@react-three/drei'
-import { Suspense } from 'react'
+import { Suspense, useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import { CameraRig } from './CameraRig'
 import { TuneOrbitControls } from './TuneOrbitControls'
 import { useExperience } from './ExperienceContext'
 import { F16Scene } from '@/scenes/f16/F16Scene'
-import { F16_MODEL_URL } from '@/scenes/f16/F16Aircraft'
 import { AutomotiveScene } from '@/scenes/automotive/AutomotiveScene'
-import { CT5_MODEL_URL } from '@/scenes/automotive/FormulaCar'
 import { RoboticsScene } from '@/scenes/robotics/RoboticsScene'
-import { ROBOT_MODEL_URL } from '@/scenes/robotics/RobotArm'
 import { AvionicsScene } from '@/scenes/avionics/AvionicsScene'
-import { DRONE_MODEL_URL } from '@/scenes/avionics/DroneAircraft'
 import { VirtekScene } from '@/scenes/virtek/VirtekScene'
-import { FUSELAGE_MODEL_URL } from '@/scenes/virtek/FuselageModel'
 import { AmdScene } from '@/scenes/amd/AmdScene'
-import { SERVER_MODEL_URL } from '@/scenes/amd/ServerRack'
 import { HangarGround } from '@/scenes/shared/HangarGround'
-
-useGLTF.preload(DRONE_MODEL_URL, true, true)
-useGLTF.preload(ROBOT_MODEL_URL, true, true)
-useGLTF.preload(F16_MODEL_URL, true, true)
-useGLTF.preload(FUSELAGE_MODEL_URL, true, true)
-useGLTF.preload(CT5_MODEL_URL, true, true)
-useGLTF.preload(SERVER_MODEL_URL, true, true)
+import { preloadAroundChapter } from '@/lib/preloadModels'
+import { careerChapters } from '@/data/careerChapters'
 
 function SceneAtmosphere() {
   return (
     <>
-      <color attach="background" args={['#05070b']} />
-      <fog attach="fog" args={['#05070b', 18, 110]} />
-      <ambientLight intensity={0.22} />
-      <hemisphereLight args={['#6d8299', '#08060a', 0.3]} />
+      {/* Mid pass — readable but still cinematic (rollback: _checkpoint_pre_brighter_hangar) */}
+      <color attach="background" args={['#07090e']} />
+      <fog attach="fog" args={['#07090e', 20, 120]} />
+      <ambientLight intensity={0.3} />
+      <hemisphereLight args={['#7e93a8', '#0a0c10', 0.4]} />
       {/* Own Suspense — HDR must never blank the whole canvas */}
       <Suspense fallback={null}>
-        <Environment preset="night" resolution={256} frames={1} />
+        <Environment preset="night" resolution={128} frames={1} environmentIntensity={0.55} />
       </Suspense>
     </>
   )
 }
 
+/** Mount only nearby bays so distant GLBs are not decoded up front. */
+function shouldMountBay(bayIndex: number, chapterIndex: number) {
+  return bayIndex >= chapterIndex - 1 && bayIndex <= chapterIndex + 1
+}
+
 export function ExperienceCanvas() {
-  const { reducedMotion, webglOk } = useExperience()
+  const { reducedMotion, webglOk, chapterIndex } = useExperience()
+  const bayCount = careerChapters.length
+
+  const mounted = useMemo(() => {
+    const flags = Array.from({ length: bayCount }, (_, i) => shouldMountBay(i, chapterIndex))
+    // Keep the opening bays warm at the start so the first handoff never pops late
+    if (chapterIndex <= 1) {
+      flags[0] = true
+      if (bayCount > 1) flags[1] = true
+    }
+    return flags
+  }, [bayCount, chapterIndex])
+
+  useEffect(() => {
+    preloadAroundChapter(chapterIndex)
+  }, [chapterIndex])
 
   if (!webglOk) {
     return (
@@ -73,7 +81,7 @@ export function ExperienceCanvas() {
           stencil: false,
           depth: true,
           toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 0.92,
+          toneMappingExposure: 1.0,
           outputColorSpace: THREE.SRGBColorSpace,
         }}
       >
@@ -81,17 +89,14 @@ export function ExperienceCanvas() {
         <HangarGround />
         <CameraRig />
         <TuneOrbitControls />
-        <AvionicsScene />
-        <RoboticsScene />
-        <F16Scene />
-        <VirtekScene />
-        <AutomotiveScene />
-        <AmdScene />
+        {mounted[0] ? <AvionicsScene /> : null}
+        {mounted[1] ? <RoboticsScene /> : null}
+        {mounted[2] ? <F16Scene /> : null}
+        {mounted[3] ? <VirtekScene /> : null}
+        {mounted[4] ? <AutomotiveScene /> : null}
+        {mounted[5] ? <AmdScene /> : null}
         <AdaptiveDpr pixelated />
         <AdaptiveEvents />
-        <Suspense fallback={null}>
-          <Preload all />
-        </Suspense>
       </Canvas>
       <div className="cinema-grade" />
     </div>

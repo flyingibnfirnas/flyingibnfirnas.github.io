@@ -169,5 +169,3 @@ export function DroneAircraft({ accent = '#e87a20', forceProcedural = false }: P
     </Suspense>
   )
 }
-
-useGLTF.preload(DRONE_MODEL_URL, true, true)

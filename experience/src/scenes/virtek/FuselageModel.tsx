@@ -82,5 +82,3 @@ export function FuselageModel() {
     </Suspense>
   )
 }
-
-useGLTF.preload(FUSELAGE_MODEL_URL, true, true)

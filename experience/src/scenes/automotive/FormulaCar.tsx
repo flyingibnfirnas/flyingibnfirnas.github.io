@@ -155,5 +155,3 @@ export function FormulaCar({ accent = '#e87a20', forceProcedural = false }: Prop
     </Suspense>
   )
 }
-
-useGLTF.preload(CT5_MODEL_URL, true, true)

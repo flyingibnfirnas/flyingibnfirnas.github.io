@@ -31,13 +31,23 @@ if (!rootEl) {
         <App />
       </StrictMode>,
     )
-    // Let first paint land, then drop the HTML splash
-    requestAnimationFrame(() => {
-      requestAnimationFrame(hideBootSplash)
-    })
+    // Keep splash until chrome UI mounts (avoids a blank black frame)
+    const started = performance.now()
+    const waitForUi = () => {
+      if (document.querySelector('.chapter-ui')) {
+        hideBootSplash()
+        return
+      }
+      if (performance.now() - started > 15000) {
+        showBootError('Still loading — check that models are reachable, then hard-refresh.')
+        return
+      }
+      requestAnimationFrame(waitForUi)
+    }
+    requestAnimationFrame(waitForUi)
   } catch (err) {
     console.error(err)
-    showBootError('Something went wrong loading the journey. Hard-refresh, or open /journey/ in a private window.')
+    showBootError('Something went wrong loading the journey. Hard-refresh, or try again.')
   }
 }
 

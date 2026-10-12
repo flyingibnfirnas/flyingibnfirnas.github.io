@@ -6,6 +6,7 @@ experience/dist/
 _checkpoint_*/
 experience/_checkpoint_*/
 experience/_assets_original_models/
+experience/_assets_pre_load_opt/
 
 # Logs / cache
 *.log

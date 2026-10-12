@@ -167,5 +167,3 @@ export function RobotArm({ accent = '#e87a20', forceProcedural = false }: Props)
     </Suspense>
   )
 }
-
-useGLTF.preload(ROBOT_MODEL_URL, true, true)

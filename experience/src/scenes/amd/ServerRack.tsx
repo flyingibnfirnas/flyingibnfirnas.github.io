@@ -90,5 +90,3 @@ export function ServerRack() {
     </Suspense>
   )
 }
-
-useGLTF.preload(SERVER_MODEL_URL, true, true)

@@ -166,5 +166,3 @@ export function F16Aircraft({ accent = '#e87a20', forceProcedural = false }: Pro
     </Suspense>
   )
 }
-
-useGLTF.preload(F16_MODEL_URL, true, true)
