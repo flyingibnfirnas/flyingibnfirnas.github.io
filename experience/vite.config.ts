@@ -5,10 +5,10 @@ import { fileURLToPath } from 'node:url'
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url))
 
-// Builds to ../journey so GitHub Pages serves the experience at /journey/
-export default defineConfig({
+// Local dev at / ; production GitHub Pages at /journey/
+export default defineConfig(({ command }) => ({
   plugins: [react()],
-  base: '/journey/',
+  base: command === 'serve' ? '/' : '/journey/',
   resolve: {
     alias: {
       '@': path.resolve(rootDir, './src'),
@@ -20,7 +20,9 @@ export default defineConfig({
     chunkSizeWarningLimit: 1400,
   },
   server: {
+    host: true,
     port: 5173,
+    strictPort: true,
     open: false,
   },
-})
+}))
