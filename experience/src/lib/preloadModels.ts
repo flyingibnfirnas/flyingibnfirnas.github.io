@@ -24,15 +24,25 @@ function preloadUrl(url: string) {
   useGLTF.preload(url, true, true)
 }
 
-/** First paint: only the opening drone (~0.4MB). */
+/**
+ * First paint: opening drone + robot (first handoff).
+ * Remaining bays warm in the background so mid-scroll decode never freezes Lenis.
+ */
 export function preloadExperienceModels() {
   preloadUrl(CHAPTER_MODEL_URLS[0])
+  preloadUrl(CHAPTER_MODEL_URLS[1])
+
+  if (typeof window === 'undefined') return
+  CHAPTER_MODEL_URLS.slice(2).forEach((url, i) => {
+    // Stagger so meshopt decode doesn't land as one main-thread spike
+    window.setTimeout(() => preloadUrl(url), 900 + i * 1100)
+  })
 }
 
-/** Warm previous/current/next bays so timeline jumps and handoffs stay smooth. */
-export function preloadAroundChapter(chapterIndex: number) {
+/** Warm a window around the active chapter (and optionally further ahead). */
+export function preloadAroundChapter(chapterIndex: number, ahead = 2) {
   const start = Math.max(0, chapterIndex - 1)
-  const end = Math.min(CHAPTER_MODEL_URLS.length - 1, chapterIndex + 1)
+  const end = Math.min(CHAPTER_MODEL_URLS.length - 1, chapterIndex + ahead)
   for (let i = start; i <= end; i++) {
     preloadUrl(CHAPTER_MODEL_URLS[i])
   }

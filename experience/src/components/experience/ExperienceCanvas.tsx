@@ -4,7 +4,7 @@ import {
   AdaptiveEvents,
   Environment,
 } from '@react-three/drei'
-import { Suspense, useEffect, useMemo } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import * as THREE from 'three'
 import { CameraRig } from './CameraRig'
 import { TuneOrbitControls } from './TuneOrbitControls'
@@ -35,28 +35,47 @@ function SceneAtmosphere() {
   )
 }
 
-/** Mount only nearby bays so distant GLBs are not decoded up front. */
-function shouldMountBay(bayIndex: number, chapterIndex: number) {
-  return bayIndex >= chapterIndex - 1 && bayIndex <= chapterIndex + 1
-}
+const SCENE_BY_BAY = [
+  AvionicsScene,
+  RoboticsScene,
+  F16Scene,
+  VirtekScene,
+  AutomotiveScene,
+  AmdScene,
+] as const
 
 export function ExperienceCanvas() {
-  const { reducedMotion, webglOk, chapterIndex } = useExperience()
+  const { reducedMotion, webglOk, chapterIndex, localProgress } = useExperience()
   const bayCount = careerChapters.length
 
-  const mounted = useMemo(() => {
-    const flags = Array.from({ length: bayCount }, (_, i) => shouldMountBay(i, chapterIndex))
-    // Keep the opening bays warm at the start so the first handoff never pops late
-    if (chapterIndex <= 1) {
-      flags[0] = true
-      if (bayCount > 1) flags[1] = true
-    }
+  // Sticky mount: once a bay is needed, keep it mounted so GLB decode never
+  // hits mid-scroll (that was freezing Lenis and causing jump-cuts).
+  const [mounted, setMounted] = useState(() => {
+    const flags = Array.from({ length: bayCount }, () => false)
+    flags[0] = true
+    if (bayCount > 1) flags[1] = true
     return flags
-  }, [bayCount, chapterIndex])
+  })
 
   useEffect(() => {
-    preloadAroundChapter(chapterIndex)
-  }, [chapterIndex])
+    // Mount / preload further ahead as the chapter progresses
+    const ahead = localProgress > 0.55 ? 2 : localProgress > 0.25 ? 2 : 1
+    preloadAroundChapter(chapterIndex, ahead)
+
+    setMounted((prev) => {
+      let changed = false
+      const next = prev.slice()
+      const start = Math.max(0, chapterIndex - 1)
+      const end = Math.min(bayCount - 1, chapterIndex + ahead)
+      for (let i = start; i <= end; i++) {
+        if (!next[i]) {
+          next[i] = true
+          changed = true
+        }
+      }
+      return changed ? next : prev
+    })
+  }, [bayCount, chapterIndex, localProgress])
 
   if (!webglOk) {
     return (
@@ -70,7 +89,7 @@ export function ExperienceCanvas() {
   return (
     <div className="experience-canvas" aria-hidden="true">
       <Canvas
-        dpr={reducedMotion ? [1, 1] : [1, 1.5]}
+        dpr={reducedMotion ? [1, 1] : [1, 1.35]}
         shadows={!reducedMotion}
         camera={{ position: [-2.8, 6.4, 9.5], fov: 38, near: 0.1, far: 220 }}
         performance={{ min: 0.5 }}
@@ -89,12 +108,7 @@ export function ExperienceCanvas() {
         <HangarGround />
         <CameraRig />
         <TuneOrbitControls />
-        {mounted[0] ? <AvionicsScene /> : null}
-        {mounted[1] ? <RoboticsScene /> : null}
-        {mounted[2] ? <F16Scene /> : null}
-        {mounted[3] ? <VirtekScene /> : null}
-        {mounted[4] ? <AutomotiveScene /> : null}
-        {mounted[5] ? <AmdScene /> : null}
+        {SCENE_BY_BAY.map((Scene, i) => (mounted[i] ? <Scene key={careerChapters[i].id} /> : null))}
         <AdaptiveDpr pixelated />
         <AdaptiveEvents />
       </Canvas>
