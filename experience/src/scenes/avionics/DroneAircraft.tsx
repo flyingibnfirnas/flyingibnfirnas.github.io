@@ -164,7 +164,7 @@ export function DroneAircraft({ accent = '#e87a20', forceProcedural = false }: P
   if (forceProcedural) return <DroneProcedural accent={accent} />
 
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<DroneProcedural accent={accent} />}>
       <DroneGlbModel />
     </Suspense>
   )

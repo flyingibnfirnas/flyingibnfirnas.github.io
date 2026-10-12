@@ -4,6 +4,7 @@ import { Suspense, useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import { careerChapters } from '@/data/careerChapters'
 import { useShotTuner } from '@/components/experience/ShotTunerContext'
+import { BaySilhouette } from '@/scenes/shared/BaySilhouette'
 
 /** Desktop `server_rack_and_console_v3.glb` → experience/public/models/server_rack.glb */
 export const SERVER_MODEL_URL = `${import.meta.env.BASE_URL}models/server_rack.glb`
@@ -85,7 +86,7 @@ function ServerGlb() {
 /** AMD bay hero — server rack + console from Desktop. */
 export function ServerRack() {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<BaySilhouette kind="server" />}>
       <ServerGlb />
     </Suspense>
   )

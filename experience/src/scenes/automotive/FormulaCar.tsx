@@ -145,12 +145,12 @@ function CarProcedural({ accent = '#e87a20' }: { accent?: string }) {
   )
 }
 
-/** Cadillac CT5-V Blackwing (GLB). Suspense keeps the bay empty until ready — no probe fetch. */
+/** Cadillac CT5-V Blackwing (GLB). Procedural stand-in until the scan is ready. */
 export function FormulaCar({ accent = '#e87a20', forceProcedural = false }: Props) {
   if (forceProcedural) return <CarProcedural accent={accent} />
 
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<CarProcedural accent={accent} />}>
       <CT5GlbModel />
     </Suspense>
   )

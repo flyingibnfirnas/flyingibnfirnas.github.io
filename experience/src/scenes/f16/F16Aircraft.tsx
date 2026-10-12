@@ -161,7 +161,7 @@ export function F16Aircraft({ accent = '#e87a20', forceProcedural = false }: Pro
   if (forceProcedural) return <F16Procedural accent={accent} />
 
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<F16Procedural accent={accent} />}>
       <F16GlbModel />
     </Suspense>
   )

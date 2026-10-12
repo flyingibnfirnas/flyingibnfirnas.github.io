@@ -1,6 +1,7 @@
 import { useGLTF } from '@react-three/drei'
 import { Suspense, useMemo } from 'react'
 import * as THREE from 'three'
+import { BaySilhouette } from '@/scenes/shared/BaySilhouette'
 
 /** Desktop `airb_fuselage.glb` → experience/public/models/airb_fuselage.glb */
 export const FUSELAGE_MODEL_URL = `${import.meta.env.BASE_URL}models/airb_fuselage.glb`
@@ -77,7 +78,7 @@ function FuselageGlb() {
 /** Airbus fuselage section — centered on the Virtek bay pad. */
 export function FuselageModel() {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<BaySilhouette kind="fuselage" />}>
       <FuselageGlb />
     </Suspense>
   )

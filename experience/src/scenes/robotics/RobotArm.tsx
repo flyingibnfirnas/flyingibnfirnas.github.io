@@ -162,7 +162,7 @@ export function RobotArm({ accent = '#e87a20', forceProcedural = false }: Props)
   if (forceProcedural) return <RobotProcedural accent={accent} />
 
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<RobotProcedural accent={accent} />}>
       <RobotGlbModel />
     </Suspense>
   )

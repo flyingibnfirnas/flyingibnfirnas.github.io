@@ -26,7 +26,7 @@ function preloadUrl(url: string) {
 
 /**
  * First paint: opening drone + robot (first handoff).
- * Remaining bays warm in the background so mid-scroll decode never freezes Lenis.
+ * Remaining bays warm soon after so pads rarely sit on placeholders for long.
  */
 export function preloadExperienceModels() {
   preloadUrl(CHAPTER_MODEL_URLS[0])
@@ -34,8 +34,8 @@ export function preloadExperienceModels() {
 
   if (typeof window === 'undefined') return
   CHAPTER_MODEL_URLS.slice(2).forEach((url, i) => {
-    // Stagger so meshopt decode doesn't land as one main-thread spike
-    window.setTimeout(() => preloadUrl(url), 900 + i * 1100)
+    // Stagger decode spikes, but keep the queue short so later bays are ready
+    window.setTimeout(() => preloadUrl(url), 400 + i * 650)
   })
 }
 
